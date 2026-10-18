@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case TNPS Ouvidoria | Ingrid Carneiro</title>
+  <meta name="description" content="Case: como transformar uma nota contaminada pela jornada em causa-raiz acionável — sistema analítico de 5 painéis e agente de IA para a voz do cliente.">
+  <meta property="og:title" content="Da nota contaminada à causa-raiz | Case Ingrid Carneiro">
+  <meta property="og:description" content="Sistema analítico de TNPS para uma Ouvidoria de telecom: storytelling do executivo ao operacional e agente de IA classificando a voz do cliente.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F1E8;
+      --bg-card: #FFFFFF;
+      --bg-soft: #EFE9DC;
+      --ink: #1C1C1C;
+      --ink-soft: #595550;
+      --accent: #0F3D2E;
+      --accent-hover: #185540;
+      --gold: #B08D57;
+      --gold-soft: rgba(176, 141, 87, 0.18);
+      --border: #DDD5C4;
+      --navy: #13263A;
+      --navy-2: #1D3650;
+      --wf-bar: #4A8BA8;
+      --good: #5CB88A;
+      --warn: #D4A74A;
+      --bad: #C76B6B;
+      --shadow: 0 2px 20px rgba(28, 28, 28, 0.06);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--ink);
+    }
+
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--gold); }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .narrow { max-width: 760px; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(245, 241, 232, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 1.1rem 0;
+    }
+    nav .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
+    .back { font-size: .9rem; font-weight: 500; color: var(--ink-soft); }
+    .back:hover { color: var(--accent); }
+
+    /* Hero */
+    .hero { padding: 5rem 0 3.5rem; }
+    .eyebrow {
+      font-size: .78rem; font-weight: 500; letter-spacing: .25em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem;
+    }
+    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); letter-spacing: -.01em; margin-bottom: 1.4rem; max-width: 900px; }
+    .lede {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(1.25rem, 2.4vw, 1.55rem); color: var(--accent);
+      max-width: 780px; line-height: 1.45; margin-bottom: 2.6rem;
+    }
+    .meta {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem; padding-top: 2rem; border-top: 1px solid var(--border);
+    }
+    .meta dt { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+    .meta dd { font-size: .95rem; color: var(--ink-soft); }
+
+    /* Numbers strip */
+    .numbers { background: var(--accent); color: var(--bg); padding: 3rem 0; }
+    .numbers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; }
+    .num strong {
+      display: block; font-family: 'Cormorant Garamond', serif; font-weight: 500;
+      font-size: 3rem; line-height: 1; color: var(--bg); margin-bottom: .5rem;
+    }
+    .num span { font-size: .88rem; color: #CFC8B6; line-height: 1.4; display: block; }
+
+    /* Sections */
+    section { padding: 5rem 0; }
+    section.alt { background: var(--bg-soft); }
+    .section-label { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
+    .step { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.1rem; margin-right: .4rem; }
+    .section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); margin-bottom: 1.5rem; letter-spacing: -.01em; }
+    .prose p { color: var(--ink-soft); font-size: 1.04rem; margin-bottom: 1.2rem; }
+    .prose p strong { color: var(--ink); font-weight: 600; }
+
+    .pull {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.35; color: var(--accent);
+      border-left: 2px solid var(--gold); padding: .3rem 0 .3rem 1.6rem; margin: 2.5rem 0;
+    }
+
+    /* Two cards (insight) */
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+      padding: 2rem 1.8rem;
+    }
+    .card .card-tag { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .7rem; }
+    .card h3 { font-size: 1.6rem; color: var(--accent); margin-bottom: .8rem; }
+    .card p { color: var(--ink-soft); font-size: .97rem; }
+    .card p + p { margin-top: .8rem; }
+
+    /* Analytical flow */
+    .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 2.5rem 0 1rem; border: 1px solid var(--border); background: var(--bg-card); }
+    .flow-step { padding: 1.8rem 1.6rem; position: relative; }
+    .flow-step + .flow-step { border-left: 1px solid var(--border); }
+    .flow-step .q { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--accent); margin-bottom: .4rem; }
+    .flow-step .k { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
+    .flow-step p { font-size: .93rem; color: var(--ink-soft); }
+    .flow-note { font-size: .92rem; color: var(--ink-soft); font-style: italic; }
+
+    /* Panels with wireframes */
+    .panels { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
+    .panel {
+      display: block;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+      padding: 1.8rem 2rem; border-left: 2px solid var(--gold);
+    }
+    .panel-body .p-num { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
+    .panel-body h3 { font-size: 1.55rem; margin: .2rem 0 .3rem; }
+    .panel-body .who { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: .8rem; }
+    .panel-body p { font-size: .95rem; color: var(--ink-soft); }
+    .panel-body .asks { margin-top: .8rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.12rem; color: var(--accent); }
+
+    /* Wireframe primitives */
+    .wf {
+      background: var(--navy); border-radius: 4px; padding: 10px;
+      aspect-ratio: 16 / 10; display: flex; flex-direction: column; gap: 6px;
+      box-shadow: inset 0 0 0 1px rgba(176,141,87,.35);
+    }
+    .wf-row { display: flex; gap: 5px; }
+    .wf-row.grow { flex: 1; }
+    .wf-kpi { flex: 1; height: 16px; background: var(--navy-2); border-radius: 2px; border-left: 2px solid var(--gold); }
+    .wf-kpi.red { border-left-color: var(--bad); }
+    .wf-box { flex: 1; background: var(--navy-2); border-radius: 2px; padding: 6px; display: flex; flex-direction: column; justify-content: center; gap: 3px; }
+    .wf-bar { height: 4px; background: var(--wf-bar); border-radius: 1px; }
+    .wf-bar.g { background: var(--good); } .wf-bar.y { background: var(--warn); } .wf-bar.r { background: var(--bad); }
+    .wf-heat { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; flex: 1; }
+    .wf-heat i { background: var(--warn); border-radius: 1px; }
+    .wf-heat i.r { background: var(--bad); } .wf-heat i.g { background: var(--good); } .wf-heat i.lg { background: #86C9A3; }
+    .wf-cols { display: flex; align-items: flex-end; gap: 3px; flex: 1; }
+    .wf-cols i { flex: 1; background: var(--wf-bar); border-radius: 1px 1px 0 0; }
+    .wf-bubble { width: 14px; height: 14px; border-radius: 50%; background: var(--gold); }
+    .wf-line { height: 2px; background: rgba(255,255,255,.18); flex: 1; align-self: center; }
+    .wf-table { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+    .wf-table i { height: 5px; background: var(--navy-2); border-radius: 1px; display: block; }
+    .wf-table i:first-child { background: rgba(176,141,87,.6); }
+    .wf-chip { height: 10px; border-radius: 5px; background: var(--navy-2); flex: 1; }
+    .wf-chip.gold { background: rgba(176,141,87,.55); }
+
+    /* Results */
+    .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .result { border-top: 2px solid var(--gold); padding-top: 1.2rem; }
+    .result h4 { font-size: 1.35rem; margin-bottom: .5rem; color: var(--accent); }
+    .result p { font-size: .95rem; color: var(--ink-soft); }
+
+    /* Decisions */
+    .decisions { display: grid; gap: 0; margin-top: 2.5rem; border-top: 1px solid var(--border); }
+    .decision { display: grid; grid-template-columns: 1fr 1.6fr; gap: 2rem; padding: 1.6rem 0; border-bottom: 1px solid var(--border); }
+    .decision h4 { font-size: 1.3rem; color: var(--ink); }
+    .decision p { font-size: .96rem; color: var(--ink-soft); }
+
+    /* Deep dive */
+    .deep-intro { margin-bottom: 2.5rem; }
+    details {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
+      margin-bottom: 1rem; transition: border-color .2s;
+    }
+    details[open] { border-color: var(--gold); }
+    summary {
+      list-style: none; cursor: pointer; padding: 1.4rem 1.6rem;
+      display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary .s-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--ink); }
+    summary .s-letter { color: var(--gold); margin-right: .6rem; }
+    summary .s-hint { display: block; font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--ink-soft); margin-top: .15rem; }
+    summary .plus { font-size: 1.4rem; color: var(--gold); transition: transform .25s; flex-shrink: 0; line-height: 1; }
+    details[open] summary .plus { transform: rotate(45deg); }
+    summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .d-body { padding: 0 1.6rem 1.8rem; border-top: 1px solid var(--border); padding-top: 1.6rem; }
+    .d-body p { color: var(--ink-soft); font-size: .97rem; margin-bottom: 1rem; }
+    .d-body h4 { font-size: 1.2rem; color: var(--accent); margin: 1.6rem 0 .6rem; }
+    .d-body h4:first-child { margin-top: 0; }
+
+    .kv { display: grid; gap: .9rem; margin: .8rem 0 1.2rem; }
+    .kv div { display: grid; grid-template-columns: 200px 1fr; gap: 1.2rem; padding-bottom: .9rem; border-bottom: 1px dashed var(--border); }
+    .kv div:last-child { border-bottom: 0; }
+    .kv dt { font-weight: 600; font-size: .93rem; color: var(--ink); }
+    .kv dd { font-size: .93rem; color: var(--ink-soft); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 1.2rem; }
+    .chips span {
+      font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border);
+      border-radius: 999px; background: var(--bg); color: var(--ink-soft);
+    }
+    .chips.gold span { border-color: var(--gold); color: var(--accent); background: var(--gold-soft); }
+
+    /* Star schema diagram */
+    .star { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: center; margin: 1rem 0 1.5rem; }
+    .star .dims { display: grid; gap: .6rem; }
+    .star .dim, .star .fact {
+      border: 1px solid var(--border); padding: .7rem .9rem; font-size: .88rem; background: var(--bg); text-align: center; border-radius: 2px;
+    }
+    .star .dim small { display: block; font-size: .75rem; color: var(--ink-soft); }
+    .star .fact { background: var(--accent); color: var(--bg); border-color: var(--accent); padding: 1.4rem 1.2rem; font-weight: 500; }
+    .star .fact small { display: block; color: #CFC8B6; font-weight: 400; font-size: .78rem; margin-top: .2rem; }
+
+    /* Pipeline */
+    .pipe { display: grid; grid-template-columns: repeat(5, 1fr); gap: .6rem; margin: 1rem 0 1.5rem; }
+    .pipe-step {
+      background: var(--bg); border: 1px solid var(--border); padding: 1rem .9rem; border-radius: 2px; position: relative;
+    }
+    .pipe-step b { display: block; font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: .35rem; font-weight: 500; }
+    .pipe-step strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 500; color: var(--accent); margin-bottom: .3rem; line-height: 1.2; }
+    .pipe-step span { font-size: .82rem; color: var(--ink-soft); line-height: 1.45; display: block; }
+    .pipe-step:not(:last-child)::after {
+      content: '→'; position: absolute; right: -.62rem; top: 50%; transform: translateY(-50%);
+      color: var(--gold); font-size: .9rem; background: var(--bg-card); line-height: 1; z-index: 2;
+    }
+
+    .swatches { display: flex; flex-wrap: wrap; gap: .8rem; margin: .8rem 0 1.2rem; }
+    .sw { display: flex; align-items: center; gap: .5rem; font-size: .85rem; color: var(--ink-soft); }
+    .sw i { width: 22px; height: 22px; border-radius: 2px; border: 1px solid var(--border); display: inline-block; }
+
+    .lessons { display: grid; gap: 1rem; }
+    .lesson { display: grid; grid-template-columns: 34px 1fr; gap: .8rem; }
+    .lesson .n { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); line-height: 1.3; }
+    .lesson p { margin: 0 !important; }
+    .lesson strong { color: var(--ink); }
+
+    .confid {
+      margin-top: 3rem; padding: 1.4rem 1.6rem; border: 1px dashed var(--gold);
+      font-size: .9rem; color: var(--ink-soft); background: var(--bg);
+    }
+
+    /* CTA */
+    .cta { text-align: center; padding: 5.5rem 0; background: var(--accent); color: var(--bg); }
+    .cta h2 { color: var(--bg); font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 1rem; }
+    .cta p { color: #D9D4C7; max-width: 560px; margin: 0 auto 2.2rem; }
+    .btn {
+      display: inline-flex; align-items: center; padding: .85rem 1.6rem; font-weight: 500; font-size: .92rem;
+      border-radius: 2px; transition: all .25s; letter-spacing: .02em; border: 1px solid var(--gold); color: var(--bg); margin: .3rem;
+    }
+    .btn:hover { background: var(--gold); color: var(--accent); }
+    footer { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,.1); background: var(--accent); color: #A89D7E; text-align: center; font-size: .88rem; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .panel { grid-template-columns: 1fr; }
+      .panel .wf { max-width: 420px; }
+      .pipe { grid-template-columns: 1fr; }
+      .pipe-step:not(:last-child)::after { content: '↓'; right: 50%; top: auto; bottom: -.75rem; transform: translateX(50%); }
+    }
+    @media (max-width: 760px) {
+      .duo, .flow { grid-template-columns: 1fr; }
+      .flow-step + .flow-step { border-left: 0; border-top: 1px solid var(--border); }
+      .decision { grid-template-columns: 1fr; gap: .4rem; }
+      .kv div { grid-template-columns: 1fr; gap: .2rem; }
+      .star { grid-template-columns: 1fr; }
+      section { padding: 3.5rem 0; }
+      .hero { padding: 3.5rem 0 2.5rem; }
+    }
+    @media (max-width: 520px) {
+      .container { padding: 0 1rem; }
+      .logo { font-size: 1.3rem; }
+      summary { padding: 1.2rem 1.1rem; }
+      .d-body { padding: 1.3rem 1.1rem 1.5rem; }
+      .card { padding: 1.5rem 1.2rem; }
+      .panel { padding: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">Ingrid Carneiro</a>
+      <a href="index.html#projetos" class="back">← Voltar aos projetos</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Case · Experiência do Cliente · Telecom</div>
+      <h1>Da nota contaminada à causa-raiz.</h1>
+      <p class="lede">Como transformei a pesquisa de satisfação de uma Ouvidoria em um sistema analítico que separa o que é responsabilidade do atendimento do que é herança da jornada — e leva cada leitor, do executivo ao supervisor, até a ação.</p>
+      <dl class="meta">
+        <div><dt>Contexto</dt><dd>Ouvidoria de uma operadora de telecom nacional, operada por central de atendimento parceira</dd></div>
+        <div><dt>Meu papel</dt><dd>Concepção analítica, arquitetura de dados, storytelling, design e automação com IA — ponta a ponta</dd></div>
+        <div><dt>Parceria</dt><dd>Liderança de estratégia e governança de CX</dd></div>
+        <div><dt>Ecossistema</dt><dd>Power BI · Power Query · Power Automate · Copilot Studio · SharePoint</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <!-- NUMBERS -->
+  <div class="numbers">
+    <div class="container numbers-grid">
+      <div class="num"><strong>5</strong><span>painéis encadeados em um único fluxo narrativo</span></div>
+      <div class="num"><strong>4</strong><span>fontes de dados integradas em um modelo estrela</span></div>
+      <div class="num"><strong>8</strong><span>famílias de indicadores, incluindo métricas autorais</span></div>
+      <div class="num"><strong>16</strong><span>atributos extraídos de cada comentário por um agente de IA</span></div>
+      <div class="num"><strong>+10 mil</strong><span>comentários na amostra usada para calibrar a taxonomia</span></div>
+    </div>
+  </div>
+
+  <!-- 1. CONTEXTO -->
+  <section>
+    <div class="container narrow prose">
+      <div class="section-label"><span class="step">01</span>Contexto e dor</div>
+      <h2 class="section-title">Uma nota que não dizia o que parecia dizer.</h2>
+      <p>A Ouvidoria é o último degrau da jornada de reclamação. Ninguém chega lá no primeiro contato: quem liga para a Ouvidoria já passou pela loja, pela central, por técnicos e, muitas vezes, por meses de cobrança errada. É um canal crítico por definição.</p>
+      <p>Ainda assim, a pesquisa de satisfação transacional (TNPS) aplicada depois do atendimento era lida como se medisse apenas a Ouvidoria. <strong>Toda a frustração acumulada na jornada caía na conta de quem estava tentando resolvê-la.</strong> A consequência era dupla: a área era avaliada de forma injusta e, pior, a empresa não conseguia enxergar onde o problema realmente nascia.</p>
+      <p>Havia, então, duas necessidades. A primeira, medir o TNPS do atendimento de forma confiável, para aplicar FCA (Fato, Causa e Ação) e estratégias de melhoria de CX. A segunda, separar o que era desempenho da Ouvidoria do que era bagagem da experiência anterior — para atuar na raiz, onde quer que ela estivesse.</p>
+    </div>
+  </section>
+
+  <!-- 2. INSIGHT -->
+  <section class="alt">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">02</span>O insight</div>
+        <h2 class="section-title">Separar não bastava. Era preciso conduzir.</h2>
+        <p>O ponto de partida foi conceitual: nem todo detrator é igual. Mas logo ficou claro que apenas separar os detratores não mudaria nada se a informação não chegasse a quem decide — no formato e na profundidade certos para cada público.</p>
+      </div>
+      <div class="duo">
+        <div class="card">
+          <div class="card-tag">Parte 1 · Separar</div>
+          <h3>O conceito de Detração Improcedente</h3>
+          <p>Cruzando a nota com a procedência da reclamação, isolei os detratores cuja queixa havia sido considerada improcedente — clientes que chegaram com uma expectativa que a Ouvidoria não poderia atender. Chamei esse grupo de <strong>Detração Improcedente</strong>.</p>
+          <p>A partir dele nasceu o <strong>TNPS Procedente</strong>: uma segunda leitura do indicador que mostra o desempenho real do atendimento, sem a distorção herdada. O gap entre as duas leituras virou, ele mesmo, um insight de gestão.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">Parte 2 · Conduzir</div>
+          <h3>Um storytelling do macro ao micro</h3>
+          <p>Desenhei os painéis como capítulos de uma mesma investigação, cada um respondendo a uma pergunta e passando o bastão para o próximo. O executivo vê o sintoma em segundos; o analista de qualidade encontra o perfil do detrator; o supervisor sabe quem deve desenvolver e com quem aplicar o feedback.</p>
+          <p>O objetivo era gerar <strong>insumo suficiente para FCA</strong>, redesenho de processos e metas arrojadas de TNPS — não apenas um relatório bonito.</p>
+        </div>
+      </div>
+      <p class="pull narrow">“A descritiva mostra o sintoma. A diagnóstica encontra a doença. A prescritiva é o tratamento.”</p>
+    </div>
+  </section>
+
+  <!-- 3. SOLUÇÃO -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">03</span>A solução</div>
+        <h2 class="section-title">Cinco painéis, uma única investigação.</h2>
+        <p>Toda a arquitetura segue um framework de três camadas de análise. Cada painel usa a camada que faz sentido para o seu público, e a prescrição surge como conclusão da leitura — com dono, prazo e métrica.</p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-step">
+          <div class="k">Descritiva</div>
+          <div class="q">O que aconteceu?</div>
+          <p>Números, distribuições e tendências. Organiza o passado sem interpretar.</p>
+        </div>
+        <div class="flow-step">
+          <div class="k">Diagnóstica</div>
+          <div class="q">Por que aconteceu?</div>
+          <p>Cruzamentos, segmentações e influenciadores. Conecta o sintoma à origem.</p>
+        </div>
+        <div class="flow-step">
+          <div class="k">Prescritiva</div>
+          <div class="q">O que fazer agora?</div>
+          <p>A conclusão acionável. Inclusive quando a resposta certa é não agir.</p>
+        </div>
+      </div>
+      <p class="flow-note container narrow" style="padding:0">O ciclo se fecha quando a ação gera novos dados, que voltam para a descritiva — um loop contínuo de melhoria.</p>
+
+      <div class="panels">
+
+        <article class="panel">
+          <div class="panel-body">
+            <div class="p-num">PAINEL 01</div>
+            <h3>Visão Executiva</h3>
+            <div class="who">Diretoria e gerência de CX</div>
+            <p>Leitura macro em uma página: TNPS com variação mensal, composição de promotores e detratores, resolutividade, satisfação por dimensão (CSAT), esforço do cliente (CES), recorrência, retenção e tempo médio de tratativa. Logo abaixo, perguntas direcionadas por origem, segmento, faixa de tempo e um mapa de calor que cruza resolução e esforço — onde mora o risco máximo.</p>
+            <p class="asks">“O TNPS caiu. Onde está o problema?”</p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-body">
+            <div class="p-num">PAINEL 02</div>
+            <h3>Perfil do Cliente</h3>
+            <div class="who">Coordenação e qualidade</div>
+            <p>Quem é o cliente que reclama: TNPS por regional, faixa etária e tempo de base. Na segunda metade, uma camada estatística com <strong>Principais Influenciadores</strong> — que revela, por exemplo, quanto a improcedência ou uma faixa de tempo aumenta a probabilidade de um cliente se tornar detrator.</p>
+            <p class="asks">“Quem é esse cliente e o que mais pesa na nota dele?”</p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-body">
+            <div class="p-num">PAINEL 03</div>
+            <h3>Jornada do Detrator</h3>
+            <div class="who">Gestão de risco e qualidade</div>
+            <p>O coração do case. Um panorama de risco e oito indicadores exclusivos do detrator, seguidos de cruzamentos que desenham seu perfil: idade, tempo de base, causa-raiz, esforço, satisfação por dimensão, origem do contato, desfecho do caso (houve acordo? houve contato?) e o efeito do tempo de tratativa sobre recorrência e escalonamento.</p>
+            <p class="asks">“Isso é expectativa não atendível ou problema real? E se é real, onde nasce?”</p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-body">
+            <div class="p-num">PAINEL 04</div>
+            <h3>Monitoramento Operacional</h3>
+            <div class="who">Supervisores e gestores diretos</div>
+            <p>Uma página feita para o dia a dia da operação e para os feedbacks dos gestores diretos. TNPS, CES, CSAT, resolutividade e faixas de tempo por liderança e por campanha, com uma matriz de atendentes que traz um <strong>Score de Risco individual</strong> — e os comentários dos clientes de cada equipe.</p>
+            <p class="asks">“Quem precisa de atenção, e em quê?”</p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-body">
+            <div class="p-num">PAINEL 05</div>
+            <h3>Voz do Cliente</h3>
+            <div class="who">Todos os públicos</div>
+            <p>Os comentários abertos, transformados em dados por um agente de IA. Tema, sentimento, emoção, criticidade, risco regulatório e — o atributo-chave — <strong>onde na jornada a avaliação recai</strong>. É aqui que nasce o TNPS atribuível à Ouvidoria, a leitura mais honesta do desempenho do atendimento.</p>
+            <p class="asks">“O que o cliente está dizendo — e sobre quem?”</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. RESULTADO -->
+  <section class="alt">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">04</span>O que mudou</div>
+        <h2 class="section-title">De um indicador para uma conversa sobre causa.</h2>
+        <p>O valor do projeto não está em um número isolado, e sim no tipo de conversa que ele passou a permitir.</p>
+      </div>
+      <div class="results">
+        <div class="result">
+          <h4>Uma medição mais justa</h4>
+          <p>A Ouvidoria passou a ter duas leituras lado a lado — a nota bruta e a nota que de fato reflete o seu atendimento. O gap entre elas mostra à gestão quanto da insatisfação é herdado de etapas anteriores.</p>
+        </div>
+        <div class="result">
+          <h4>Causa-raiz com insumo para FCA</h4>
+          <p>Os cruzamentos da Jornada do Detrator mostram se o problema é de pessoas, processo ou sistema — e em que segmento, região ou faixa de tempo ele se concentra.</p>
+        </div>
+        <div class="result">
+          <h4>Feedback individual com critério</h4>
+          <p>O Score de Risco por atendente substituiu a percepção subjetiva por um critério transparente, dando aos gestores diretos uma base objetiva para monitoria e desenvolvimento.</p>
+        </div>
+        <div class="result">
+          <h4>Risco regulatório antecipado</h4>
+          <p>A fila priorizada por criticidade e menção a órgãos de defesa do consumidor permite agir antes que um caso vire escalonamento externo.</p>
+        </div>
+        <div class="result">
+          <h4>Motivos escondidos recuperados</h4>
+          <p>Comentários que antes caíam no balde genérico “Outros” passaram a ser classificados em temas reais, revelando inclusive a qualidade das opções fechadas da própria pesquisa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DECISÕES -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">05</span>Decisões que fizeram diferença</div>
+        <h2 class="section-title">O que eu escolhi — e o que eu descartei.</h2>
+      </div>
+      <div class="decisions">
+        <div class="decision">
+          <h4>Troquei o Python por um agente de IA</h4>
+          <p>A primeira tentativa de agrupar comentários usou clusterização estatística. O resultado era subjetivo: o modelo não entendia ironia, contexto ou para quem a crítica se dirigia, e exigia recalibração constante. Descontinuei e construí um agente de IA com regras explícitas — o que antes era subjetivo virou critério documentado.</p>
+        </div>
+        <div class="decision">
+          <h4>A IA não vive dentro do painel</h4>
+          <p>O agente trabalha antes, como uma etiquetadora que grava resultados estruturados em uma lista. O Power BI apenas lê. Isso mantém o painel leve, isola falhas e preserva os quatro painéis existentes intocados.</p>
+        </div>
+        <div class="decision">
+          <h4>“Não atribuível” é uma resposta válida</h4>
+          <p>Quando o comentário não traz pista de onde o problema aconteceu, o agente não presume que foi culpa da Ouvidoria só porque a pesquisa é dela. Preferir a honestidade à completude protege a leitura de contaminação.</p>
+        </div>
+        <div class="decision">
+          <h4>Gravidade não é emoção</h4>
+          <p>A criticidade de um caso é definida por sinais objetivos — tempo sem serviço, valor financeiro, risco jurídico, recorrência — e não pelo tom do cliente. Um relato calmo pode ser crítico; um desabafo pode não ser.</p>
+        </div>
+        <div class="decision">
+          <h4>Índices compostos com a gestão</h4>
+          <p>Os pesos do índice de experiência e do score de risco foram definidos junto com a liderança, em partes iguais. Indicador que a gestão ajuda a construir é indicador que a gestão usa.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. APROFUNDAMENTO -->
+  <section class="alt" id="aprofundar">
+    <div class="container">
+      <div class="narrow prose deep-intro">
+        <div class="section-label"><span class="step">06</span>Para quem quer se aprofundar</div>
+        <h2 class="section-title">Por dentro da arquitetura.</h2>
+        <p>Uma visão técnica do que sustenta a solução — arquitetura e ideação, sem código. Abra a seção que interessar.</p>
+      </div>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">A</span>Arquitetura de dados</span><span class="s-hint">Fontes, pilares, modelo estrela e governança</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <h4>Quatro fontes, cinco pilares</h4>
+          <p>Cada resposta da pesquisa é enriquecida com dados operacionais, de perfil e de hierarquia, todos ligados pelo número do caso.</p>
+          <dl class="kv">
+            <div><dt>Voz do cliente</dt><dd>Nota, satisfação por dimensão, esforço, resolução percebida, motivo e comentário aberto — vindos da plataforma de pesquisa.</dd></div>
+            <div><dt>Operação</dt><dd>Tempo de tratativa, SLA, resolução no primeiro contato, procedência, acordo e causa-raiz — vindos do sistema de casos.</dd></div>
+            <div><dt>Perfil</dt><dd>Tempo de base, faixa etária, região, histórico técnico e receita — vindos de uma base enriquecida.</dd></div>
+            <div><dt>Hierarquia</dt><dd>Atendente → supervisor → gerência → campanha, acumulada mês a mês com deduplicação que preserva a hierarquia mais recente de cada pessoa.</dd></div>
+            <div><dt>Risco</dt><dd>Recorrência e escalonamento a órgãos externos em janelas de 45 dias.</dd></div>
+          </dl>
+
+          <h4>Modelo estrela</h4>
+          <div class="star">
+            <div class="dims">
+              <div class="dim">Tempo<small>calendário e comparativos</small></div>
+              <div class="dim">Local<small>regional · estado · cidade</small></div>
+            </div>
+            <div class="fact">Fato<br>Respostas<small>uma linha por pesquisa</small></div>
+            <div class="dims">
+              <div class="dim">Produto<small>segmento</small></div>
+              <div class="dim">Hierarquia<small>da operação</small></div>
+            </div>
+          </div>
+          <p>Uma dimensão auxiliar desconectada permite comparar as três dimensões de satisfação em um único visual, e todas as medidas vivem em uma tabela dedicada, organizada por famílias.</p>
+
+          <h4>Regras de governança</h4>
+          <div class="chips">
+            <span>Quarentena por cliente</span><span>Sem disparo duplicado por caso</span><span>Expurgo por regra de negócio</span><span>Escopo restrito à Ouvidoria</span><span>Janela de resposta de 10 dias</span><span>Auditoria de duplicidade com alerta visual</span>
+          </div>
+          <p>Fontes ficam em pastas padronizadas e a troca futura do conector para banco de dados afeta apenas a camada de origem — transformação, modelo, medidas e visuais permanecem intactos.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">B</span>Família de indicadores</span><span class="s-hint">As métricas clássicas e as autorais, explicadas sem fórmulas</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <h4>Os clássicos, bem construídos</h4>
+          <div class="chips">
+            <span>TNPS e variação mensal</span><span>Promotores · neutros · detratores</span><span>CSAT por postura, agilidade e clareza</span><span>CES (esforço)</span><span>Resolutividade</span><span>Tempo médio de tratativa</span><span>FCR</span><span>Procedência</span><span>Recorrência e escalonamento</span>
+          </div>
+          <p>Mesmo nos clássicos houve cuidado de construção: o TNPS responde corretamente quando o leitor filtra por grupo, o arredondamento respeita valores negativos e os volumes contam casos distintos — nunca linhas.</p>
+
+          <h4>As métricas autorais</h4>
+          <dl class="kv">
+            <div><dt>Detração Improcedente</dt><dd>Fatia dos detratores cuja reclamação foi considerada improcedente. Lida dentro dos detratores e sobre o total de respostas.</dd></div>
+            <div><dt>TNPS Procedente</dt><dd>Recalcula o indicador sem os detratores improcedentes, mostrando o desempenho real do atendimento.</dd></div>
+            <div><dt>TNPS atribuível à Ouvidoria</dt><dd>Calculado apenas sobre comentários cuja avaliação recai sobre o atendimento da Ouvidoria, a partir da classificação do agente de IA.</dd></div>
+            <div><dt>Impacto de cada dimensão</dt><dd>Diferença de TNPS entre clientes que deram nota alta e baixa em postura, agilidade e clareza — revela qual dimensão mais move a nota.</dd></div>
+            <div><dt>IXC — Índice de Experiência Composto</dt><dd>Combina TNPS, satisfação, resolução e esforço, normalizados, em uma escala de 0 a 100.</dd></div>
+            <div><dt>Score de Risco</dt><dd>Soma quatro sinais por caso — detrator, não resolvido, recorrência e escalonamento — em faixas de risco. Agregado por atendente, alimenta a matriz operacional.</dd></div>
+            <div><dt>Mapa resolução × esforço</dt><dd>Matriz colorida pela gravidade da combinação, não pelo volume: não resolvido com alto esforço é o vermelho mais intenso.</dd></div>
+          </dl>
+
+          <h4>Leituras de negócio derivadas</h4>
+          <div class="chips gold">
+            <span>Erro operacional</span><span>Problema sistêmico</span><span>Falha de processo</span><span>Risco regulatório</span><span>Gestão de expectativa</span><span>Tempo × retrabalho</span><span>Contato no fechamento</span>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">C</span>Taxonomia da Voz do Cliente</span><span class="s-hint">Como um comentário livre vira 16 atributos estruturados</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>A taxonomia é a fonte única de verdade do projeto: define os campos, os valores permitidos e as regras que o agente deve seguir. Foi calibrada em uma amostra real de mais de 10 mil comentários e é versionada, para que safras diferentes continuem comparáveis.</p>
+
+          <h4>Doze temas macro</h4>
+          <div class="chips">
+            <span>Resolução do problema</span><span>Atendimento humano</span><span>Retorno e follow-up</span><span>Acessibilidade do canal</span><span>Clareza e consistência</span><span>Cobrança e financeiro</span><span>Rede e técnico</span><span>Produto, plano e contrato</span><span>Cancelamento e retenção</span><span>Escalonamento externo</span><span>Elogio</span><span>Outros</span>
+          </div>
+          <p>Cada tema se desdobra em subtemas curados, permitindo ir do assunto geral ao driver específico.</p>
+
+          <h4>Os eixos de qualificação</h4>
+          <dl class="kv">
+            <div><dt>Escopo da avaliação</dt><dd>O eixo central: a crítica é sobre o atendimento da Ouvidoria, sobre a jornada anterior, sobre ambos — ou não é atribuível.</dd></div>
+            <div><dt>Alvo do sentimento</dt><dd>A quem a crítica se dirige: à pessoa que atendeu, à empresa e seus processos, ao produto ou a ambos.</dd></div>
+            <div><dt>Sentimento e emoção</dt><dd>O tom do texto — não da nota — e a emoção predominante, de raiva a gratidão.</dd></div>
+            <div><dt>Criticidade</dt><dd>A gravidade objetiva do caso, independente da irritação.</dd></div>
+            <div><dt>Risco</dt><dd>Menções a órgãos reguladores, defesa do consumidor, ação judicial ou ameaça de cancelamento.</dd></div>
+            <div><dt>Problema recorrente</dt><dd>Só quando o próprio problema voltou — nunca pela passagem natural de um canal para outro.</dd></div>
+            <div><dt>Alinhamento nota × texto</dt><dd>Detecta ironia e incoerência, como nota alta com texto negativo.</dd></div>
+            <div><dt>Confiança</dt><dd>Quão segura a IA está da própria classificação. Confiança baixa vai para revisão humana.</dd></div>
+          </dl>
+
+          <h4>O caso que tudo isso captura</h4>
+          <p class="pull" style="margin:1rem 0 0">Pessoa da Ouvidoria elogiada, jornada criticada, nota baixa. A nota é injusta com o atendimento — e agora isso pode ser medido.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">D</span>Agente de IA e automação</span><span class="s-hint">Da planilha mensal ao painel, sem retrabalho nem duplicidade</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Por governança, a IA roda inteiramente dentro do ambiente corporativo Microsoft. O fluxo tem dois circuitos que nunca se cruzam: o dos quatro painéis existentes, intocado, e o da etiquetadora, que alimenta o quinto.</p>
+
+          <div class="pipe">
+            <div class="pipe-step"><b>Origem</b><strong>Pesquisa mensal</strong><span>Comentários preparados em uma tabela de apoio, separada da pasta lida pelo painel.</span></div>
+            <div class="pipe-step"><b>Orquestração</b><strong>Power Automate</strong><span>Percorre cada linha, checa duplicidade e chama o agente.</span></div>
+            <div class="pipe-step"><b>Classificação</b><strong>Agente de IA</strong><span>Modelo de raciocínio no Copilot Studio devolve um JSON estrito com 16 atributos.</span></div>
+            <div class="pipe-step"><b>Armazenamento</b><strong>Lista SharePoint</strong><span>Uma linha por caso, com 22 colunas entre contexto e classificação.</span></div>
+            <div class="pipe-step"><b>Leitura</b><strong>Power BI</strong><span>Relacionado à fato pelo número do caso, filtrando em uma só direção.</span></div>
+          </div>
+
+          <h4>Peças que garantem robustez</h4>
+          <dl class="kv">
+            <div><dt>Trava de duplicidade</dt><dd>Antes de chamar a IA, o fluxo verifica se o caso já foi classificado. Rodar várias vezes nunca duplica nem gasta processamento à toa.</dd></div>
+            <div><dt>Controle de lote</dt><dd>Parâmetros de “pular” e “processar” no disparo permitem tratar milhares de linhas em faixas, sem editar o fluxo e sem risco de tempo esgotado.</dd></div>
+            <div><dt>Filtro de conteúdo</dt><dd>Reclamações mais pesadas às vezes são barradas pela moderação da plataforma. Em vez de travar, o fluxo desvia esses casos para uma gravação marcada para revisão humana.</dd></div>
+            <div><dt>Escolha do modelo</dt><dd>Um modelo de raciocínio foi mantido mesmo diante de opções mais baratas, porque os casos difíceis — ironia, escopo, gravidade — eram exatamente o motivo do projeto. O custo é controlado por lote e pela trava, não por um modelo mais fraco.</dd></div>
+            <div><dt>Deduplicação preventiva</dt><dd>Na leitura do painel, a versão mais recente de cada caso prevalece, protegendo contra reprocessamentos futuros.</dd></div>
+          </dl>
+
+          <h4>Do piloto à produção</h4>
+          <p>A prova de conceito foi construída e validada em ambiente individual, com plano documentado de migração para uma conta de serviço — o padrão correto para que a solução não dependa de uma pessoa.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">E</span>Design system</span><span class="s-hint">Sofisticação sem ruído, liberdade de layout, leitura executiva</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Os painéis seguem um sistema visual próprio, aplicado por tema reutilizável e plano de fundo — sem prender a posição dos visuais e pronto para ser replicado em outros projetos como modelo.</p>
+          <h4>Três princípios</h4>
+          <dl class="kv">
+            <div><dt>Sofisticação sem ruído</dt><dd>Estética premium com identidade dourada e pouca cor.</dd></div>
+            <div><dt>Liberdade de layout</dt><dd>O tema padroniza; o designer posiciona.</dd></div>
+            <div><dt>Leitura executiva</dt><dd>Hierarquia clara: o olho sabe aonde ir primeiro.</dd></div>
+          </dl>
+          <h4>Paleta</h4>
+          <div class="swatches">
+            <span class="sw"><i style="background:#13263A"></i>Navy dos cards</span>
+            <span class="sw"><i style="background:#F4EFE3"></i>Fundo marfim</span>
+            <span class="sw"><i style="background:#C6A664"></i>Dourado antigo</span>
+            <span class="sw"><i style="background:#5CB88A"></i>Positivo</span>
+            <span class="sw"><i style="background:#D4A74A"></i>Atenção</span>
+            <span class="sw"><i style="background:#E08A4A"></i>No limite</span>
+            <span class="sw"><i style="background:#C76B6B"></i>Crítico</span>
+          </div>
+          <p>As cores são semânticas e consistentes em todos os painéis: a mesma faixa de tempo tem sempre a mesma cor. Na Jornada do Detrator, os cards ganham borda vinho — um sinal sutil de que, a partir dali, o leitor está olhando só para quem detratou. Uma capa navegável conduz a cada capítulo e mostra a data da última atualização.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">F</span>Dificuldades e aprendizados</span><span class="s-hint">O que deu errado no caminho e o que ficou de lição</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <div class="lessons">
+            <div class="lesson"><span class="n">1</span><p><strong>Validar a premissa nos dados antes de construir.</strong> Um campo que parecia texto livre era, na prática, uma lista de etiquetas curtas. Inspecionar a amostra eliminou uma etapa inteira de IA desnecessária.</p></div>
+            <div class="lesson"><span class="n">2</span><p><strong>Regras de IA precisam de calibração em casos reais.</strong> A primeira versão marcava qualquer desabafo como problema recorrente. Testar em comentários reais levou a regras mais precisas e documentadas.</p></div>
+            <div class="lesson"><span class="n">3</span><p><strong>Limites de plataforma aparecem nos casos mais importantes.</strong> A moderação de conteúdo barrava justamente os detratores mais graves. A solução foi desenhar o fluxo para tolerar a falha e encaminhar o caso para revisão.</p></div>
+            <div class="lesson"><span class="n">4</span><p><strong>Pequenos tipos de dado quebram grandes fluxos.</strong> Identificadores em notação científica, campos limitados a 255 caracteres e datas com hora foram tratados como decisões de modelagem, não como detalhes.</p></div>
+            <div class="lesson"><span class="n">5</span><p><strong>Qualidade da fonte também é entregável.</strong> Duplicidades na origem viraram um card de auditoria com alerta visual — o problema saiu do escondido e passou a ser acompanhado com a área responsável.</p></div>
+            <div class="lesson"><span class="n">6</span><p><strong>Documentar enquanto constrói.</strong> Cada etapa gerou documentação de arquitetura, regras e decisões, o que tornou possível reconstruir partes perdidas e transferir a solução para produção.</p></div>
+          </div>
+        </div>
+      </details>
+
+      <div class="confid narrow">
+        <strong>Sobre confidencialidade:</strong> este case foi anonimizado. Nomes de empresas, pessoas, números reais e telas originais foram omitidos; as descrições dos painéis representam sua estrutura, não seus dados.
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>Quer conversar sobre um desafio parecido?</h2>
+      <p>Gosto de problemas em que o dado existe, mas a decisão ainda não acontece.</p>
+      <a href="mailto:ingridpcarneiro@outlook.com" class="btn">E-mail</a>
+      <a href="https://www.linkedin.com/" class="btn" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="index.html" class="btn">Voltar ao portfólio</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Ingrid Carneiro — Inteligência de dados para negócios.</div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
