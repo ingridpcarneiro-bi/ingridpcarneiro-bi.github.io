@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Hub de Motivos | Ingrid Carneiro</title>
+  <meta name="description" content="Case: como um hub analítico de motivos destravou uma força tarefa que resolveu 16 problemas estruturais e se auto-extinguiu quando o indicador virou linear.">
+  <meta property="og:title" content="O hub que destravou uma força tarefa | Case Ingrid Carneiro">
+  <meta property="og:description" content="Pareto, comparativos temporais e DAX avançado para transformar motivos de reclamação em plano de ação.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F1E8;
+      --bg-card: #FFFFFF;
+      --bg-soft: #EFE9DC;
+      --ink: #1C1C1C;
+      --ink-soft: #595550;
+      --accent: #0F3D2E;
+      --accent-hover: #185540;
+      --gold: #B08D57;
+      --gold-soft: rgba(176, 141, 87, 0.18);
+      --border: #DDD5C4;
+      --shadow: 0 2px 20px rgba(28, 28, 28, 0.06);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; line-height: 1.2; color: var(--ink); }
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--gold); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .narrow { max-width: 760px; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(245, 241, 232, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 1.1rem 0; }
+    nav .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
+    .back { font-size: .9rem; font-weight: 500; color: var(--ink-soft); }
+    .back:hover { color: var(--accent); }
+
+    .hero { padding: 5rem 0 3.5rem; }
+    .eyebrow { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); letter-spacing: -.01em; margin-bottom: 1.4rem; max-width: 900px; }
+    .lede { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.25rem, 2.4vw, 1.55rem); color: var(--accent); max-width: 780px; line-height: 1.45; margin-bottom: 2.6rem; }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .meta dt { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+    .meta dd { font-size: .95rem; color: var(--ink-soft); }
+
+    .numbers { background: var(--accent); color: var(--bg); padding: 3rem 0; }
+    .numbers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; }
+    .num strong { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 3rem; line-height: 1; color: var(--bg); margin-bottom: .5rem; }
+    .num span { font-size: .88rem; color: #CFC8B6; line-height: 1.4; display: block; }
+
+    section { padding: 5rem 0; }
+    section.alt { background: var(--bg-soft); }
+    .section-label { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
+    .step { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.1rem; margin-right: .4rem; }
+    .section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); margin-bottom: 1.5rem; letter-spacing: -.01em; }
+    .prose p { color: var(--ink-soft); font-size: 1.04rem; margin-bottom: 1.2rem; }
+    .prose p strong { color: var(--ink); font-weight: 600; }
+
+    .pull { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.35; color: var(--accent); border-left: 2px solid var(--gold); padding: .3rem 0 .3rem 1.6rem; margin: 2.5rem 0; }
+
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; padding: 2rem 1.8rem; }
+    .card .card-tag { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .7rem; }
+    .card h3 { font-size: 1.5rem; color: var(--accent); margin-bottom: .8rem; }
+    .card p { color: var(--ink-soft); font-size: .97rem; }
+    .card p + p { margin-top: .8rem; }
+
+    .capitulos { display: grid; gap: 1.3rem; margin-top: 2.5rem; }
+    .capitulo { background: var(--bg-card); border: 1px solid var(--border); border-left: 2px solid var(--gold); border-radius: 2px; padding: 1.8rem 2rem; }
+    .capitulo .c-num { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
+    .capitulo h3 { font-size: 1.5rem; margin: .2rem 0 .3rem; }
+    .capitulo .who { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: .8rem; }
+    .capitulo p { font-size: .95rem; color: var(--ink-soft); }
+    .capitulo .asks { margin-top: .8rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.12rem; color: var(--accent); }
+
+    .timeline { position: relative; margin: 2.5rem 0 1rem; padding-left: 2rem; border-left: 1px solid var(--border); }
+    .timeline .ev { margin-bottom: 1.6rem; position: relative; }
+    .timeline .ev::before { content: ''; position: absolute; left: -2.4rem; top: .55rem; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); border: 2px solid var(--bg-soft); }
+    .timeline .ev h4 { font-size: 1.25rem; color: var(--accent); margin-bottom: .25rem; }
+    .timeline .ev p { font-size: .96rem; color: var(--ink-soft); margin: 0; }
+
+    .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .result { border-top: 2px solid var(--gold); padding-top: 1.2rem; }
+    .result h4 { font-size: 1.3rem; margin-bottom: .5rem; color: var(--accent); }
+    .result p { font-size: .95rem; color: var(--ink-soft); }
+
+    details { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; margin-bottom: 1rem; transition: border-color .2s; }
+    details[open] { border-color: var(--gold); }
+    summary { list-style: none; cursor: pointer; padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    summary::-webkit-details-marker { display: none; }
+    summary .s-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--ink); }
+    summary .s-letter { color: var(--gold); margin-right: .6rem; }
+    summary .s-hint { display: block; font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--ink-soft); margin-top: .15rem; }
+    summary .plus { font-size: 1.4rem; color: var(--gold); transition: transform .25s; flex-shrink: 0; line-height: 1; }
+    details[open] summary .plus { transform: rotate(45deg); }
+    summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .d-body { padding: 0 1.6rem 1.8rem; border-top: 1px solid var(--border); padding-top: 1.6rem; }
+    .d-body p { color: var(--ink-soft); font-size: .97rem; margin-bottom: 1rem; }
+    .d-body h4 { font-size: 1.2rem; color: var(--accent); margin: 1.6rem 0 .6rem; }
+    .d-body h4:first-child { margin-top: 0; }
+    .kv { display: grid; gap: .9rem; margin: .8rem 0 1.2rem; }
+    .kv div { display: grid; grid-template-columns: 200px 1fr; gap: 1.2rem; padding-bottom: .9rem; border-bottom: 1px dashed var(--border); }
+    .kv div:last-child { border-bottom: 0; }
+    .kv dt { font-weight: 600; font-size: .93rem; color: var(--ink); }
+    .kv dd { font-size: .93rem; color: var(--ink-soft); }
+    .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 1.2rem; }
+    .chips span { font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg); color: var(--ink-soft); }
+    .chips.gold span { border-color: var(--gold); color: var(--accent); background: var(--gold-soft); }
+
+    .confid { margin-top: 3rem; padding: 1.4rem 1.6rem; border: 1px dashed var(--gold); font-size: .9rem; color: var(--ink-soft); background: var(--bg); }
+
+    .cta { text-align: center; padding: 5.5rem 0; background: var(--accent); color: var(--bg); }
+    .cta h2 { color: var(--bg); font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 1rem; }
+    .cta p { color: #D9D4C7; max-width: 560px; margin: 0 auto 2.2rem; }
+    .btn { display: inline-flex; align-items: center; padding: .85rem 1.6rem; font-weight: 500; font-size: .92rem; border-radius: 2px; transition: all .25s; letter-spacing: .02em; border: 1px solid var(--gold); color: var(--bg); margin: .3rem; }
+    .btn:hover { background: var(--gold); color: var(--accent); }
+    footer { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,.1); background: var(--accent); color: #A89D7E; text-align: center; font-size: .88rem; }
+
+    @media (max-width: 760px) {
+      .duo { grid-template-columns: 1fr; }
+      .kv div { grid-template-columns: 1fr; gap: .2rem; }
+      section { padding: 3.5rem 0; }
+      .hero { padding: 3.5rem 0 2.5rem; }
+    }
+    @media (max-width: 520px) {
+      .container { padding: 0 1rem; }
+      .logo { font-size: 1.3rem; }
+      summary { padding: 1.2rem 1.1rem; }
+      .d-body { padding: 1.3rem 1.1rem 1.5rem; }
+      .card, .capitulo { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">Ingrid Carneiro</a>
+      <a href="index.html#projetos" class="back">← Voltar aos projetos</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Case · Análise de causa-raiz · Telecom</div>
+      <h1>O hub que destravou uma força tarefa.</h1>
+      <p class="lede">Como um hub analítico de motivos de reclamação transformou um relatório quinzenal em plano de ação cruzado entre áreas — e se tornou obsoleto quando o próprio indicador virou linear.</p>
+      <dl class="meta">
+        <div><dt>Contexto</dt><dd>Ouvidoria de uma operadora de telecom nacional</dd></div>
+        <div><dt>Meu papel</dt><dd>Modelagem, DAX, construção dos visuais, apresentação quinzenal à nível 2</dd></div>
+        <div><dt>Público</dt><dd>Gerências gerais, com desdobramento para áreas competentes</dd></div>
+        <div><dt>Ferramentas</dt><dd>Power BI · Power Query (M) · DAX</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <div class="numbers">
+    <div class="container numbers-grid">
+      <div class="num"><strong>16</strong><span>problemas identificados: 5 estruturais e 11 de porte médio</span></div>
+      <div class="num"><strong>6 meses</strong><span>de força tarefa quinzenal baseada no hub</span></div>
+      <div class="num"><strong>YoY · MoM · WoW</strong><span>três janelas de comparação para separar sazonalidade de desvio</span></div>
+      <div class="num"><strong>Linear</strong><span>o comportamento final que decretou o fim da própria força tarefa</span></div>
+    </div>
+  </div>
+
+  <!-- 1. CONTEXTO -->
+  <section>
+    <div class="container narrow prose">
+      <div class="section-label"><span class="step">01</span>Contexto e dor</div>
+      <h2 class="section-title">Volume não é causa.</h2>
+      <p>A Ouvidoria recebia milhares de reclamações por mês, cada uma com uma causa-raiz registrada. Os relatórios mostravam quais motivos eram os mais frequentes, mas pouco além disso. A pergunta <em>"por que esse motivo está aqui?"</em> não tinha resposta estruturada.</p>
+      <p>A consequência prática: as reuniões de nível 2 giravam em torno de ranking de volume. Discutia-se o topo da lista toda quinzena, sem conseguir distinguir o que era <strong>sazonalidade esperada</strong> do que era <strong>desvio real</strong>, e sem conseguir ligar o motivo a uma área responsável capaz de agir sobre ele.</p>
+      <p>O hub nasceu dessa frustração. Não para substituir o relatório, e sim para dar a cada motivo <strong>três camadas de contexto</strong> — perfil, comparação temporal e cruzamentos — suficientes para transformar a leitura em delegação.</p>
+    </div>
+  </section>
+
+  <!-- 2. SOLUÇÃO -->
+  <section class="alt">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">02</span>A solução</div>
+        <h2 class="section-title">Um Pareto, muitos cruzamentos, três janelas.</h2>
+        <p>O hub foi desenhado como uma leitura em três andares: primeiro o Pareto que separa o essencial do acessório; depois os cruzamentos que explicam cada motivo; por fim as comparações temporais que separam sazonalidade de desvio.</p>
+      </div>
+
+      <div class="capitulos">
+        <article class="capitulo">
+          <div class="c-num">CAPÍTULO 01</div>
+          <h3>Pareto de motivos</h3>
+          <div class="who">Causa-raiz × Dor</div>
+          <p>Dois paretos lado a lado — o da <strong>causa-raiz operacional</strong> (como o atendimento classifica o caso) e o da <strong>dor relatada</strong> (como o cliente descreve o problema). A diferença entre as duas listas já é um insight: quando um motivo aparece grande em uma e pequeno na outra, há desalinhamento entre o que o cliente sente e o que a operação registra.</p>
+          <p class="asks">"Onde estão concentrados 80% dos casos — e eles conversam com a voz do cliente?"</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="c-num">CAPÍTULO 02</div>
+          <h3>Motivo × origem do contato</h3>
+          <div class="who">Portal × telefone</div>
+          <p>Cada motivo quebrado por canal de entrada. Revela comportamentos típicos: motivos técnicos tendem a vir pelo telefone, motivos de cobrança migram para o portal. Quando a proporção muda sem explicação, é sinal de que algo mudou na jornada anterior ao atendimento.</p>
+          <p class="asks">"Por qual canal esse cliente nos procura — e isso faz sentido?"</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="c-num">CAPÍTULO 03</div>
+          <h3>Motivo × procedência</h3>
+          <div class="who">Sim × não</div>
+          <p>O percentual de reclamações consideradas procedentes dentro de cada motivo. Um motivo com alta procedência vira prioridade de correção; um com baixa procedência aponta para gestão de expectativa, canal errado ou falha de informação na jornada.</p>
+          <p class="asks">"Esse motivo é um problema real ou um ruído do processo?"</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="c-num">CAPÍTULO 04</div>
+          <h3>Motivo × segmento</h3>
+          <div class="who">Móvel × residencial</div>
+          <p>A mesma causa-raiz pode ter perfis muito diferentes entre as linhas de produto. Separar os segmentos evita diagnósticos genéricos e permite endereçar a ação exatamente para a área dona daquele produto.</p>
+          <p class="asks">"Esse problema atinge igualmente residencial e móvel, ou é concentrado?"</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="c-num">CAPÍTULO 05</div>
+          <h3>FCR × motivos</h3>
+          <div class="who">Resolução no primeiro contato</div>
+          <p>Taxa de resolução no primeiro contato por motivo, calculada apenas sobre o canal telefone — onde o conceito de FCR efetivamente se aplica. Motivos com FCR muito baixo são os que mais consomem energia da operação e mais frustram o cliente.</p>
+          <p class="asks">"Qual motivo custa mais caro para resolver — e por quê?"</p>
+        </article>
+
+        <article class="capitulo">
+          <div class="c-num">CAPÍTULO 06</div>
+          <h3>Comparativos temporais</h3>
+          <div class="who">YoY · MoM · WoW</div>
+          <p>Três janelas de comparação lado a lado para cada motivo. É aqui que o hub ganha seu poder de diagnóstico: sazonalidade aparece quando o YoY está estável e o MoM oscila; desvio real aparece quando as três janelas mostram variação na mesma direção.</p>
+          <p class="asks">"Esse pico é novo, ou é todo ano assim?"</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. IMPACTO -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">03</span>O que o hub destravou</div>
+        <h2 class="section-title">Da divulgação quinzenal à força tarefa.</h2>
+        <p>O hub passou a ser divulgado quinzenalmente para as gerências gerais de nível 2, com leitura das variações em pontos percentuais entre safras. Em pouco tempo, as reuniões deixaram de girar em torno de "quais são os maiores motivos" e passaram a girar em torno de "o que mudou e por quê".</p>
+        <p>Essa mudança de conversa levou à <strong>criação de uma força tarefa estruturada</strong>, com encontros quinzenais, para investigar o que o hub apontava como desvio. Foi uma iniciativa cruzada: a equipe de BI trazia a leitura comparada; as áreas donas de cada motivo entravam para investigar, elaborar FCA e aplicar correção.</p>
+      </div>
+
+      <div class="timeline">
+        <div class="ev"><h4>Mês 1 — Instalação do ritual</h4><p>O hub entra como pauta fixa das reuniões quinzenais. As primeiras variações são lidas em conjunto com as áreas, calibrando interpretação.</p></div>
+        <div class="ev"><h4>Mês 2 — Primeiros ofensores</h4><p>Os comparativos revelam concentrações recorrentes. Áreas responsáveis são identificadas e começam o levantamento de causa.</p></div>
+        <div class="ev"><h4>Meses 3 e 4 — FCAs e correções</h4><p>Cinco problemas estruturais e onze de porte médio são formalizados em FCA. Cada um recebe dono, prazo e indicador de acompanhamento no próprio hub.</p></div>
+        <div class="ev"><h4>Mês 5 — Comportamento desacelera</h4><p>Os motivos tratados começam a mostrar queda consistente nos comparativos. O hub passa a servir também como instrumento de validação das correções aplicadas.</p></div>
+        <div class="ev"><h4>Mês 6 — Linearidade</h4><p>Os motivos corrigidos entram em um platô. Como o indicador deixa de apresentar desvios, <strong>a própria força tarefa se extingue</strong> — não por falta de interesse, mas porque o problema que a justificava deixou de existir.</p></div>
+      </div>
+
+      <p class="pull narrow">A melhor homenagem a um painel analítico é se tornar silencioso.</p>
+    </div>
+  </section>
+
+  <!-- 4. RESULTADO -->
+  <section class="alt">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">04</span>Resultado</div>
+        <h2 class="section-title">De ranking a plano de ação.</h2>
+      </div>
+      <div class="results">
+        <div class="result">
+          <h4>5 problemas estruturais</h4>
+          <p>Identificados por padrão de recorrência cruzada entre causa-raiz, procedência e segmento. Resolvidos com mudança de processo nas áreas competentes.</p>
+        </div>
+        <div class="result">
+          <h4>11 problemas de porte médio</h4>
+          <p>Delegados com FCA formal e acompanhamento quinzenal, até confirmação de redução estável no comparativo YoY.</p>
+        </div>
+        <div class="result">
+          <h4>Separação entre sazonalidade e desvio</h4>
+          <p>O cruzamento das três janelas temporais virou um protocolo de leitura — a área que recebia a demanda já entrava sabendo se o alerta era real ou cíclico.</p>
+        </div>
+        <div class="result">
+          <h4>Autoextinção da força tarefa</h4>
+          <p>O ritual quinzenal se encerrou quando o comportamento virou linear. É o melhor desfecho possível para uma iniciativa de melhoria.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. APROFUNDAR -->
+  <section id="aprofundar">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">05</span>Para quem quer se aprofundar</div>
+        <h2 class="section-title">Por dentro da construção.</h2>
+        <p>Uma visão da engenharia por trás do hub — arquitetura e técnica, sem código. Abra a seção que interessar.</p>
+      </div>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">A</span>Modelo de dados</span><span class="s-hint">Fato única, dimensões de tempo em role-playing e auditoria</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <h4>Fato única, enriquecida</h4>
+          <p>A fato representa um caso (uma reclamação) com todos os seus atributos de operação: motivo, causa-raiz, origem do contato, procedência, segmento, FCR, datas de abertura e fechamento.</p>
+
+          <h4>Dimensões de tempo em role-playing</h4>
+          <p>Um caso tem duas datas que importam: quando entrou e quando foi fechado. Em vez de forçar uma só, o modelo usa <strong>duas dimensões de calendário</strong> — uma por data — permitindo responder perguntas diferentes com o mesmo dado:</p>
+          <div class="chips">
+            <span>Quantos casos abriram no mês?</span><span>Quantos foram fechados no mês?</span><span>Quantos ainda estavam abertos ao final?</span><span>Qual a distribuição de tempo de tratativa?</span>
+          </div>
+          <p>Uma medida dedicada reconcilia as duas visões — se o leitor filtra uma das pontas, apenas essa é usada; se filtra as duas, o modelo retorna a união distinta dos casos envolvidos.</p>
+
+          <h4>Auditoria embutida</h4>
+          <p>Cada caso tem um identificador único. Um indicador silencioso compara o total de linhas com o total de identificadores distintos — se houver diferença, o hub mostra visualmente que a fonte duplicou algo. É proteção barata contra silêncios perigosos.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">B</span>Pareto e ranking dinâmicos</span><span class="s-hint">A linha dos 80% que responde a qualquer filtro</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>O coração do hub é um Pareto que não quebra quando o leitor filtra. Isso parece simples, mas é um dos cálculos mais fáceis de errar em Power BI — o acumulado precisa respeitar o contexto do visual, não a base inteira.</p>
+
+          <h4>Como foi feito</h4>
+          <div class="kv">
+            <div><dt>Ranking contextual</dt><dd>Cada motivo recebe uma posição dentro do conjunto <em>atualmente visível</em>, não do universo total. Isso significa que, se o leitor filtrar por um segmento, o Pareto recalcula do zero.</dd></div>
+            <div><dt>Acumulado contextual</dt><dd>A linha do acumulado soma os valores apenas dos motivos com ranking menor ou igual ao da linha corrente, dentro do conjunto filtrado. É esse detalhe que faz a curva fechar exatamente nos 100% do que está visível.</dd></div>
+            <div><dt>Linha de corte</dt><dd>Uma constante marca a altura dos 80%, apoiando a leitura visual da regra clássica de Pareto sem ocupar espaço analítico.</dd></div>
+          </div>
+          <p>O mesmo mecanismo foi replicado para o Pareto da dor (motivo pela ótica do cliente), com medidas espelhadas — mantendo os dois visuais sincronizados e permitindo comparar lado a lado o olhar da operação e o do cliente.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">C</span>Cruzamentos como % do motivo</span><span class="s-hint">A escolha de denominador que muda tudo</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Todos os cruzamentos (origem, procedência, segmento, FCR) seguem a mesma lógica: cada percentual é calculado <strong>com o motivo como referência</strong>, não o total geral.</p>
+          <p>Em termos práticos: quando o visual mostra que 70% de um motivo veio pelo telefone, significa 70% <em>daquele motivo específico</em>. Isso faz toda a diferença na leitura — comparar motivos entre si fica justo, independente do tamanho de cada um.</p>
+
+          <h4>A técnica, em plano alto</h4>
+          <p>O denominador de cada percentual é construído "removendo" o filtro da dimensão em análise e preservando o filtro do motivo. É um padrão clássico de DAX que troca <em>parte do contexto</em> por outra parte, sem jogar fora o restante.</p>
+          <p>O mesmo padrão foi aplicado para o FCR — com um refinamento: a métrica só considera o canal telefone, porque é onde o conceito faz sentido. Chamadas pelo portal entram no total geral, mas não poluem o cálculo do FCR.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">D</span>Comparativos temporais</span><span class="s-hint">YoY, MoM e WoW no mesmo plano</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Os três comparativos convivem no hub e são lidos juntos, não isoladamente. Essa foi uma decisão deliberada: cada janela sozinha engana, as três juntas revelam a natureza do movimento.</p>
+
+          <h4>Como cada janela se comporta</h4>
+          <div class="kv">
+            <div><dt>Ano contra ano (YoY)</dt><dd>Elimina sazonalidade. Se o motivo subiu em comparação com o mesmo mês do ano passado, há algo novo acontecendo.</dd></div>
+            <div><dt>Mês contra mês (MoM)</dt><dd>Mostra tendência. Útil para detectar aceleração ou desaceleração de um motivo.</dd></div>
+            <div><dt>Semana contra semana (WoW)</dt><dd>Captura eventos pontuais. Picos de uma semana isolada normalmente são operação, não comportamento.</dd></div>
+          </div>
+
+          <h4>O protocolo de leitura</h4>
+          <div class="chips gold">
+            <span>YoY estável + MoM oscila = sazonalidade</span><span>Três janelas na mesma direção = desvio real</span><span>WoW isolado = evento operacional</span>
+          </div>
+          <p>Esse protocolo virou linguagem comum entre BI e as áreas, acelerando a tomada de decisão e reduzindo a quantidade de alarmes falsos levados para as reuniões.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">E</span>ETL e preparação</span><span class="s-hint">Transformações no Power Query antes de qualquer medida</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Boa parte do que parece complexo no DAX só é possível porque a base chegou limpa. A camada de ETL cuidou das decisões estruturais antes de qualquer visual existir.</p>
+
+          <h4>O que foi tratado no Power Query</h4>
+          <div class="kv">
+            <div><dt>Causa-raiz hierárquica</dt><dd>A coluna de origem trazia níveis numerados concatenados no texto. Foram removidos, deixando apenas o rótulo, para evitar inconsistências de agrupamento e ordenação.</dd></div>
+            <div><dt>Segmentação de produto</dt><dd>Unidades de negócio foram agrupadas em dois segmentos — móvel e residencial — por regra condicional. Isso tirou da camada de visualização a decisão de agrupar.</dd></div>
+            <div><dt>Separação de bases mescladas</dt><dd>Em certas rodadas, o relatório trazia safras agregadas em uma única extração. Uma duplicação intencional da coluna de referência permitiu segmentar por período de fechamento sem perder o período original.</dd></div>
+            <div><dt>Mescla com dimensões</dt><dd>Calendários e dimensões de apoio foram relacionados pela chave adequada, não por mescla no Power Query — mantendo o modelo estrela e o controle de cardinalidade.</dd></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">F</span>Documentação do hub</span><span class="s-hint">O que torna um dashboard vivo depois que o criador sai</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Cada medida do hub foi documentada em um dicionário com <strong>racional, objetivo e dependências</strong>. O documento acompanha o arquivo, cresce com ele e permite que qualquer outra pessoa entenda não só <em>o que</em> o indicador faz, mas <em>por que</em> foi construído daquele jeito.</p>
+
+          <h4>Estrutura da documentação</h4>
+          <div class="chips">
+            <span>Capítulos alinhados 1:1 com as páginas do hub</span><span>Tipificação de cada objeto (medida, coluna, tabela, consulta)</span><span>Tabelas e colunas de origem citadas</span><span>Medidas referenciadas mapeadas</span><span>Observações de uso (cartão, eixo, ordenação)</span>
+          </div>
+          <p>Essa prática virou padrão para outros painéis depois dele. É o tipo de coisa que não aparece no visual, mas é o que diferencia um dashboard que sobrevive de um que vira ruído seis meses depois.</p>
+        </div>
+      </details>
+
+      <div class="confid narrow">
+        <strong>Sobre confidencialidade:</strong> este case foi anonimizado. Nomes de empresas, pessoas, nomes de áreas e números específicos de motivos foram omitidos; a descrição acima representa a estrutura e as decisões de construção, não os dados.
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>Procurando alguém que vai do dado à ação?</h2>
+      <p>Dashboard que não vira decisão é relatório caro. Vamos conversar.</p>
+      <a href="mailto:ingridpcarneiro@outlook.com" class="btn">E-mail</a>
+      <a href="https://www.linkedin.com/" class="btn" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="index.html" class="btn">Voltar ao portfólio</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Ingrid Carneiro — Inteligência de dados para negócios.</div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
