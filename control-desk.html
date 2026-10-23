@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Control Desk | Ingrid Carneiro</title>
+  <meta name="description" content="Case: como um ecossistema em Power Platform tirou a gestão de acessos de planilhas frágeis e de uma documentação dispersa — 80% menos erros, 13% mais eficiência.">
+  <meta property="og:title" content="Do conhecimento disperso ao time inteiro operando | Case Ingrid Carneiro">
+  <meta property="og:description" content="Intranet em SharePoint, apps em Power Apps e automações para um time de gestão de acessos que atende cerca de 450 campanhas.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F1E8; --bg-card: #FFFFFF; --bg-soft: #EFE9DC;
+      --ink: #1C1C1C; --ink-soft: #595550;
+      --accent: #0F3D2E; --accent-hover: #185540;
+      --gold: #B08D57; --gold-soft: rgba(176, 141, 87, 0.18);
+      --border: #DDD5C4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; line-height: 1.2; color: var(--ink); }
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--gold); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .narrow { max-width: 760px; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(245, 241, 232, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 1.1rem 0; }
+    nav .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
+    .back { font-size: .9rem; font-weight: 500; color: var(--ink-soft); }
+    .back:hover { color: var(--accent); }
+
+    .hero { padding: 5rem 0 3.5rem; }
+    .eyebrow { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); letter-spacing: -.01em; margin-bottom: 1.4rem; max-width: 900px; }
+    .lede { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.25rem, 2.4vw, 1.55rem); color: var(--accent); max-width: 780px; line-height: 1.45; margin-bottom: 2.6rem; }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .meta dt { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+    .meta dd { font-size: .95rem; color: var(--ink-soft); }
+
+    .numbers { background: var(--accent); color: var(--bg); padding: 3rem 0; }
+    .numbers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; }
+    .num strong { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 3rem; line-height: 1; color: var(--bg); margin-bottom: .5rem; }
+    .num span { font-size: .88rem; color: #CFC8B6; line-height: 1.4; display: block; }
+
+    section { padding: 5rem 0; }
+    section.alt { background: var(--bg-soft); }
+    .section-label { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
+    .step { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.1rem; margin-right: .4rem; }
+    .section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); margin-bottom: 1.5rem; letter-spacing: -.01em; }
+    .prose p { color: var(--ink-soft); font-size: 1.04rem; margin-bottom: 1.2rem; }
+    .prose p strong { color: var(--ink); font-weight: 600; }
+    .pull { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.35; color: var(--accent); border-left: 2px solid var(--gold); padding: .3rem 0 .3rem 1.6rem; margin: 2.5rem 0; }
+
+    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 2.5rem; border: 1px solid var(--border); background: var(--bg-card); }
+    .ba-col { padding: 1.8rem; }
+    .ba-col + .ba-col { border-left: 1px solid var(--border); background: #FBF9F4; }
+    .ba-col h3 { font-size: 1.45rem; margin-bottom: 1rem; }
+    .ba-col.before h3 { color: var(--ink-soft); }
+    .ba-col.after h3 { color: var(--accent); }
+    .ba-col ul { list-style: none; display: grid; gap: .75rem; }
+    .ba-col li { font-size: .95rem; color: var(--ink-soft); padding-left: 1.3rem; position: relative; }
+    .ba-col li::before { content: ''; position: absolute; left: 0; top: .72rem; width: 8px; height: 1px; background: var(--gold); }
+
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; padding: 2rem 1.8rem; }
+    .card .card-tag { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .7rem; }
+    .card h3 { font-size: 1.5rem; color: var(--accent); margin-bottom: .8rem; }
+    .card p { color: var(--ink-soft); font-size: .97rem; }
+    .card p + p { margin-top: .8rem; }
+
+    .blocks { display: grid; gap: 1.3rem; margin-top: 2.5rem; }
+    .block { background: var(--bg-card); border: 1px solid var(--border); border-left: 2px solid var(--gold); border-radius: 2px; padding: 1.8rem 2rem; }
+    .block .b-num { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
+    .block h3 { font-size: 1.5rem; margin: .2rem 0 .3rem; }
+    .block .who { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: .8rem; }
+    .block p { font-size: .95rem; color: var(--ink-soft); }
+    .block .tools { margin-top: .9rem; font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+
+    .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .result { border-top: 2px solid var(--gold); padding-top: 1.2rem; }
+    .result h4 { font-size: 1.35rem; margin-bottom: .5rem; color: var(--accent); }
+    .result p { font-size: .95rem; color: var(--ink-soft); }
+
+    .decisions { display: grid; margin-top: 2.5rem; border-top: 1px solid var(--border); }
+    .decision { display: grid; grid-template-columns: 1fr 1.6fr; gap: 2rem; padding: 1.6rem 0; border-bottom: 1px solid var(--border); }
+    .decision h4 { font-size: 1.3rem; }
+    .decision p { font-size: .96rem; color: var(--ink-soft); }
+
+    details { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; margin-bottom: 1rem; transition: border-color .2s; }
+    details[open] { border-color: var(--gold); }
+    summary { list-style: none; cursor: pointer; padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    summary::-webkit-details-marker { display: none; }
+    summary .s-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--ink); }
+    summary .s-letter { color: var(--gold); margin-right: .6rem; }
+    summary .s-hint { display: block; font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--ink-soft); margin-top: .15rem; }
+    summary .plus { font-size: 1.4rem; color: var(--gold); transition: transform .25s; flex-shrink: 0; line-height: 1; }
+    details[open] summary .plus { transform: rotate(45deg); }
+    summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .d-body { padding: 1.6rem 1.6rem 1.8rem; border-top: 1px solid var(--border); }
+    .d-body p { color: var(--ink-soft); font-size: .97rem; margin-bottom: 1rem; }
+    .d-body h4 { font-size: 1.2rem; color: var(--accent); margin: 1.6rem 0 .6rem; }
+    .d-body h4:first-child { margin-top: 0; }
+    .kv { display: grid; gap: .9rem; margin: .8rem 0 1.2rem; }
+    .kv div { display: grid; grid-template-columns: 200px 1fr; gap: 1.2rem; padding-bottom: .9rem; border-bottom: 1px dashed var(--border); }
+    .kv div:last-child { border-bottom: 0; }
+    .kv dt { font-weight: 600; font-size: .93rem; color: var(--ink); }
+    .kv dd { font-size: .93rem; color: var(--ink-soft); }
+    .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 1.2rem; }
+    .chips span { font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg); color: var(--ink-soft); }
+    .chips.gold span { border-color: var(--gold); color: var(--accent); background: var(--gold-soft); }
+
+    .chain { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .8rem 0 1.4rem; }
+    .chain span { font-size: .88rem; padding: .55rem .9rem; border: 1px solid var(--border); background: var(--bg); border-radius: 2px; color: var(--accent); font-weight: 500; }
+    .chain i { color: var(--gold); font-style: normal; }
+
+    .lessons { display: grid; gap: 1rem; }
+    .lesson { display: grid; grid-template-columns: 34px 1fr; gap: .8rem; }
+    .lesson .n { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); line-height: 1.3; }
+    .lesson p { margin: 0 !important; }
+    .lesson strong { color: var(--ink); }
+
+    .confid { margin-top: 3rem; padding: 1.4rem 1.6rem; border: 1px dashed var(--gold); font-size: .9rem; color: var(--ink-soft); background: var(--bg); }
+
+    .cta { text-align: center; padding: 5.5rem 0; background: var(--accent); color: var(--bg); }
+    .cta h2 { color: var(--bg); font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 1rem; }
+    .cta p { color: #D9D4C7; max-width: 560px; margin: 0 auto 2.2rem; }
+    .btn { display: inline-flex; align-items: center; padding: .85rem 1.6rem; font-weight: 500; font-size: .92rem; border-radius: 2px; transition: all .25s; letter-spacing: .02em; border: 1px solid var(--gold); color: var(--bg); margin: .3rem; }
+    .btn:hover { background: var(--gold); color: var(--accent); }
+    footer { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,.1); background: var(--accent); color: #A89D7E; text-align: center; font-size: .88rem; }
+
+    @media (max-width: 760px) {
+      .duo, .before-after { grid-template-columns: 1fr; }
+      .ba-col + .ba-col { border-left: 0; border-top: 1px solid var(--border); }
+      .decision { grid-template-columns: 1fr; gap: .4rem; }
+      .kv div { grid-template-columns: 1fr; gap: .2rem; }
+      section { padding: 3.5rem 0; }
+      .hero { padding: 3.5rem 0 2.5rem; }
+    }
+    @media (max-width: 520px) {
+      .container { padding: 0 1rem; }
+      .logo { font-size: 1.3rem; }
+      summary { padding: 1.2rem 1.1rem; }
+      .d-body { padding: 1.3rem 1.1rem 1.5rem; }
+      .card, .block, .ba-col { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">Ingrid Carneiro</a>
+      <a href="index.html#projetos" class="back">← Voltar aos projetos</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Case · Power Platform · Gestão de identidades e acessos (IAM)</div>
+      <h1>Do conhecimento disperso ao time inteiro operando.</h1>
+      <p class="lede">Como tirei a gestão de acessos de uma central de atendimento nacional de planilhas frágeis e de uma documentação dispersa — e construí um ecossistema em que qualquer pessoa do time consegue atender qualquer demanda.</p>
+      <dl class="meta">
+        <div><dt>Contexto</dt><dd>Área de gestão de identidades e acessos (IAM) de uma central de atendimento nacional, com várias unidades operacionais</dd></div>
+        <div><dt>Meu papel</dt><dd>Diagnóstico, desenho da solução, construção da intranet, dos apps e das automações, e condução da mudança no time</dd></div>
+        <div><dt>Usuários</dt><dd>Todo o time de gestão de acessos, além de gestores e áreas parceiras</dd></div>
+        <div><dt>Ecossistema</dt><dd>SharePoint · Power Apps · Power Automate · Lists · Planner · Clipchamp · Power BI · Teams</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <div class="numbers">
+    <div class="container numbers-grid">
+      <div class="num"><strong>R$ 0</strong><span>de custo adicional — só ferramentas que a empresa já licenciava</span></div>
+      <div class="num"><strong>−80%</strong><span>nos erros de processo do time</span></div>
+      <div class="num"><strong>+13%</strong><span>de celeridade e eficiência nas tratativas</span></div>
+      <div class="num"><strong>~450</strong><span>campanhas de atendimento com matrizes de acesso gerenciadas</span></div>
+      <div class="num"><strong>28</strong><span>pessoas do time operando no mesmo ecossistema</span></div>
+      <div class="num"><strong>30 dias</strong><span>de antecedência nas escalas, que antes eram feitas de última hora</span></div>
+    </div>
+  </div>
+
+  <!-- 1. CONTEXTO -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">01</span>Contexto e dor</div>
+        <h2 class="section-title">O que o IDM não cobria dependia de uma documentação dispersa.</h2>
+        <p>Em uma central de atendimento, cada colaborador precisa receber exatamente os acessos que a sua função exige — nem mais, nem menos. A área de gestão de identidades e acessos (IAM) garante isso por meio de <strong>matrizes de acesso baseadas em papéis (RBAC)</strong>: para cada campanha e cada cargo, a matriz define quais <strong>roles</strong> e <strong>permissões</strong> devem ser concedidos.</p>
+        <p>Nos sistemas centrais, essa matriz é aplicada pelo <strong>sistema de gestão de identidades (IDM)</strong> da empresa, que sustenta a concessão, a movimentação e a revogação de acessos com base no papel, sob os princípios de <strong>menor privilégio</strong> e <strong>segregação de funções (SoD)</strong>.</p>
+        <p>Mas a matriz também descrevia um outro universo: <strong>sistemas periféricos</strong> — legados, ferramentas de fornecedores terceiros e plataformas específicas de cada operação — que <strong>não são controlados pelo IDM</strong>. Neles, o acesso é concedido manualmente, cada um com o seu próprio fluxo de solicitação, aprovação e contato no fornecedor. É exatamente onde o risco de erro e de apontamento de auditoria é maior, porque não existe trilha automática.</p>
+        <p>E era justamente nesse universo que a documentação era mais frágil: <strong>desatualizada, não centralizada</strong> e, em parte, baseada no <strong>conhecimento implícito do time</strong>. Como solicitar o acesso em cada sistema periférico, quem aprovava, qual fornecedor acionar, quais exceções existiam — essas respostas estavam espalhadas. Somado a isso, as matrizes de cerca de 450 campanhas, além dos acessos administrativos, eram mantidas em <strong>planilhas compartilhadas</strong>, editadas por várias pessoas ao mesmo tempo, sem controle de alteração. O risco operacional e de auditoria era alto, e houve perda de informação.</p>
+        <p>Não havia treinamento formal, as escalas eram montadas de última hora e as evidências de auditoria ficavam em pastas pessoais. Quando a pessoa com mais familiaridade sobre um tema estava ausente, a demanda demorava mais.</p>
+      </div>
+
+      <div class="before-after">
+        <div class="ba-col before">
+          <h3>Antes</h3>
+          <ul>
+            <li>Matrizes RBAC em planilhas compartilhadas, sem controle de alteração, com alto risco e perda de informação</li>
+            <li>Fluxos dos sistemas periféricos (fora do IDM) com documentação desatualizada e não centralizada</li>
+            <li>Nenhum treinamento formal para novos integrantes</li>
+            <li>Escalas, férias e feriados resolvidos de última hora</li>
+            <li>Evidências de auditoria em pastas individuais</li>
+            <li>Sem um catálogo dos sistemas periféricos e de como conceder acesso em cada um</li>
+          </ul>
+        </div>
+        <div class="ba-col after">
+          <h3>Depois</h3>
+          <ul>
+            <li>Matrizes RBAC em aplicativo, com estrutura, edição controlada e visão consolidada</li>
+            <li>Fluxos dos sistemas periféricos documentados em vídeo e PDF, acessíveis a todos</li>
+            <li>Trilha de treinamento para solicitar e conceder acessos</li>
+            <li>Escalas planejadas com um mês de antecedência e lembretes automáticos</li>
+            <li>Repositório do time para evidências de auditoria e atendimentos específicos</li>
+            <li>Catálogo vivo de sistemas, erros conhecidos e procedimentos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. INSIGHT -->
+  <section class="alt">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">02</span>O insight</div>
+        <h2 class="section-title">O problema não era a ferramenta. Era onde o conhecimento morava.</h2>
+        <p>Trocar a planilha por um aplicativo resolveria uma parte. Mas os erros nasciam também de outro lugar: cada pessoa fazia do seu jeito, com a informação que tinha. A solução precisava mudar <strong>onde o conhecimento mora</strong> — da pessoa para o time.</p>
+      </div>
+      <div class="duo">
+        <div class="card">
+          <div class="card-tag">Princípio 1</div>
+          <h3>Uma porta de entrada única</h3>
+          <p>Tudo o que o time precisa para trabalhar — matrizes, fluxos, procedimentos, treinamentos, contatos de escalonamento, escalas — passou a ter um único endereço. Quem chega novo sabe onde procurar; quem já está não precisa perguntar.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">Princípio 2</div>
+          <h3>Conhecimento compartilhado e atualizado</h3>
+          <p>O conhecimento implícito do time foi transformado em material formal, em vídeo e em PDF, com a participação dos colegas mais experientes. Documentar passou a fazer parte da rotina de trabalho — e foi a parte que mais mudou o resultado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SOLUÇÃO -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">03</span>A solução</div>
+        <h2 class="section-title">Um ecossistema construído só com ferramentas nativas.</h2>
+        <p>Toda a solução foi montada com ferramentas que a empresa já licenciava no ambiente Microsoft corporativo: <strong>custo adicional zero</strong>, sem servidor próprio e dentro da governança da empresa. Cada peça resolve uma dor específica, e todas se encontram na intranet.</p>
+      </div>
+
+      <div class="blocks">
+        <article class="block">
+          <div class="b-num">01</div>
+          <h3>Intranet do time</h3>
+          <div class="who">A porta de entrada</div>
+          <p>Página inicial com atalhos para tudo o que o dia a dia exige: verificação de restrições de acesso, treinamentos, projetos e implantações, matrizes críticas, erros conhecidos, procedimentos, links de sistemas, processos e auditorias, e o histórico das atas de reunião semanais. Notícias e avisos de mudança de fluxo ficam em destaque, para que ninguém trabalhe com uma regra desatualizada.</p>
+          <div class="tools">SharePoint · Páginas · Notícias</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">02</div>
+          <h3>App de Matrizes (Supermatriz)</h3>
+          <div class="who">O fim das planilhas</div>
+          <p>Aplicativo que substituiu as planilhas compartilhadas. Reúne as matrizes de cada unidade operacional, com campanhas, cargos, perfis, funções e sistemas para atribuição de acessos. Uma tela de Supermatriz consolida todas as unidades em uma só visão, e uma tela de edição concentra as alterações em um ponto controlado. O app reconhece quem está usando e dá as boas-vindas pelo nome.</p>
+          <div class="tools">Power Apps · SharePoint Lists · Office 365</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">03</div>
+          <h3>Relacionamentos e escalonamento</h3>
+          <div class="who">Quem acionar, e como</div>
+          <p>Para cada campanha, o app mostra quem são os pontos de contato, tanto na central quanto no cliente contratante, com atalhos diretos para abrir uma conversa no Teams ou um e-mail no Outlook. Um texto padrão de escalonamento garante que todos acionem as áreas do mesmo jeito.</p>
+          <div class="tools">Power Apps · Teams · Outlook</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">04</div>
+          <h3>Controle de campanhas</h3>
+          <div class="who">Da entrada à exceção</div>
+          <p>Um segundo aplicativo e uma área própria na intranet para o ciclo de vida das campanhas: fluxograma do processo, controle individual, perguntas frequentes e uma automação para tratar as exceções. Projetos e implantações ficam registrados com foco, período, ponto focal e status final.</p>
+          <div class="tools">Power Apps · Lists · Power Automate</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">05</div>
+          <h3>Gestão do time</h3>
+          <div class="who">Escalas que não pegam ninguém de surpresa</div>
+          <p>Calendário de plantonistas, escala de férias, escala presencial e remota, feriados do mês e aniversariantes, todos em listas. Lembretes automáticos avisam a gestão com antecedência para organizar a cobertura das ausências — e as escalas passaram a ser fechadas com um mês de antecedência.</p>
+          <div class="tools">Lists · Power Automate</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">06</div>
+          <h3>Base de conhecimento</h3>
+          <div class="who">Do conhecimento implícito ao material formal</div>
+          <p>Treinamentos em vídeo mostrando como solicitar cada acesso, procedimentos em PDF, um catálogo dos sistemas periféricos com o fluxo de concessão de cada um, e uma lista de erros conhecidos com a solução de cada um. Projetos de implantação de novos acessos são acompanhados no Planner.</p>
+          <div class="tools">Clipchamp · Biblioteca de documentos · Planner</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">07</div>
+          <h3>Governança e visão consolidada</h3>
+          <div class="who">Auditoria pronta para qualquer pessoa responder</div>
+          <p>Repositório do time para respostas de auditoria e atendimentos específicos, atas das reuniões semanais e um painel em Power BI com a visão administrativa consolidada de todas as matrizes, acessível de dentro do próprio app.</p>
+          <div class="tools">Bibliotecas SharePoint · Power BI</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. RESULTADO -->
+  <section class="alt">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">04</span>O que mudou</div>
+        <h2 class="section-title">Menos erro, mais velocidade e um time intercambiável.</h2>
+      </div>
+      <div class="results">
+        <div class="result">
+          <h4>80% menos erros</h4>
+          <p>Com matrizes estruturadas, edição controlada e procedimentos documentados, os erros de processo caíram para um quinto do que eram.</p>
+        </div>
+        <div class="result">
+          <h4>13% mais eficiência</h4>
+          <p>Ganho de celeridade medido nas tratativas: menos tempo procurando informação, menos idas e vindas, menos retrabalho.</p>
+        </div>
+        <div class="result">
+          <h4>Job rotation possível</h4>
+          <p>Com o conhecimento compartilhado, qualquer pessoa do time passou a poder assumir outras frentes, sem depender de quem tinha mais tempo de casa.</p>
+        </div>
+        <div class="result">
+          <h4>Fluxos mais seguros</h4>
+          <p>Com o processo visível, o time passou a identificar lacunas nos fluxos, questionar o cliente contratante e redesenhar processos, trazendo mais segurança à liberação de acessos.</p>
+        </div>
+        <div class="result">
+          <h4>Auditoria sempre à mão</h4>
+          <p>Documentos que viviam em pastas pessoais foram para repositórios do time. Qualquer pessoa consegue responder a uma demanda de auditoria na hora.</p>
+        </div>
+        <div class="result">
+          <h4>Escalas com um mês de folga</h4>
+          <p>O que era resolvido de última hora passou a ser planejado com antecedência, com a gestão avisada automaticamente.</p>
+        </div>
+      </div>
+      <p class="pull narrow">Quando o conhecimento é compartilhado, o time deixa de ter gargalo.</p>
+    </div>
+  </section>
+
+  <!-- 5. DECISÕES -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">05</span>Decisões que fizeram diferença</div>
+        <h2 class="section-title">O que eu escolhi — e por quê.</h2>
+      </div>
+      <div class="decisions">
+        <div class="decision">
+          <h4>Custo adicional zero</h4>
+          <p>Nenhuma licença nova, nenhum fornecedor, nenhuma compra a aprovar: tudo foi construído com as ferramentas que a empresa já pagava. Isso tirou o projeto da fila de orçamento, eliminou risco de segurança com ferramentas externas e acelerou a adoção, porque o time já conhecia o ambiente. O ganho de 80% em erros e 13% em eficiência veio sem um real de investimento extra.</p>
+        </div>
+        <div class="decision">
+          <h4>Começar pelo conhecimento, não pela ferramenta</h4>
+          <p>O app resolveu a planilha, mas foi a documentação centralizada que permitiu a qualquer pessoa do time atender qualquer demanda. Sem a segunda, a primeira só teria trocado o lugar do problema.</p>
+        </div>
+        <div class="decision">
+          <h4>Uma lista por unidade, uma visão para todas</h4>
+          <p>Cada unidade operacional mantém sua própria matriz, o que facilita a manutenção e reduz conflitos de edição. A Supermatriz junta tudo em uma tela de leitura para quem precisa ver o todo.</p>
+        </div>
+        <div class="decision">
+          <h4>Automatizar o que costuma ser esquecido</h4>
+          <p>A automação foi para onde o erro humano era mais provável: lembretes de escala, ausências e exceções. O resto ficou simples e manual de propósito.</p>
+        </div>
+        <div class="decision">
+          <h4>Documentar como parte da rotina</h4>
+          <p>Registrar e atualizar procedimentos passou a fazer parte do trabalho de todo o time. Foi uma decisão de gestão, tanto quanto técnica.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. APROFUNDAR -->
+  <section class="alt" id="aprofundar">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">06</span>Para quem quer se aprofundar</div>
+        <h2 class="section-title">Por dentro do ecossistema.</h2>
+        <p>Uma visão da arquitetura e das escolhas de construção, sem código. Abra a seção que interessar.</p>
+      </div>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">A</span>Arquitetura do ecossistema</span><span class="s-hint">Como as peças se conectam</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>A intranet é o centro. Tudo o que é dado estruturado vive em listas; tudo o que é documento vive em bibliotecas; os aplicativos leem e gravam nas listas; o Power BI lê as listas para a visão consolidada; as automações observam as listas e disparam avisos.</p>
+          <div class="kv">
+            <div><dt>Camada de dados</dt><dd>Listas do SharePoint: matrizes por unidade, relacionamentos de campanha, sistemas e acessos, escalas, plantões, feriados, projetos.</dd></div>
+            <div><dt>Camada de documentos</dt><dd>Bibliotecas para procedimentos, auditorias, atas e materiais de treinamento.</dd></div>
+            <div><dt>Camada de aplicação</dt><dd>Dois apps em Power Apps: matrizes e controle de campanhas.</dd></div>
+            <div><dt>Camada de automação</dt><dd>Fluxos que avisam a gestão sobre escalas e ausências e tratam exceções de campanha.</dd></div>
+            <div><dt>Camada de análise</dt><dd>Painel em Power BI com a visão administrativa consolidada, acessível de dentro do app.</dd></div>
+            <div><dt>Camada de colaboração</dt><dd>Teams e Outlook para escalonamento, Planner para projetos, Clipchamp para vídeos.</dd></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">B</span>A Supermatriz por dentro</span><span class="s-hint">Telas, fontes de dados e lógica de acesso</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <h4>A lógica de uma matriz de acessos</h4>
+          <div class="chain"><span>Campanha</span><i>→</i><span>Cargo</span><i>→</i><span>Role</span><i>→</i><span>Permissões por sistema</span></div>
+          <p>É o modelo RBAC na prática: o acesso não é concedido à pessoa, e sim ao papel que ela ocupa. Para qualquer combinação de campanha e cargo, o app responde quais roles e permissões aquela pessoa precisa receber — tanto nos sistemas centrais, aplicados pelo IDM, quanto nos sistemas periféricos, concedidos manualmente. É a mesma pergunta que antes exigia abrir a planilha certa, encontrar a aba certa e torcer para ninguém ter alterado a linha errada.</p>
+
+          <h4>Telas</h4>
+          <div class="kv">
+            <div><dt>Página inicial</dt><dd>Boas-vindas personalizada com nome e foto do usuário, e navegação para cada unidade.</dd></div>
+            <div><dt>Matrizes por unidade</dt><dd>Uma tela para cada unidade operacional, com busca e filtros.</dd></div>
+            <div><dt>Supermatriz</dt><dd>Visão consolidada de todas as unidades em um só lugar.</dd></div>
+            <div><dt>Edição das matrizes</dt><dd>Ponto único e controlado para alterações.</dd></div>
+            <div><dt>Relacionamentos</dt><dd>Dados de campanha cruzados com os contatos de escalonamento, com atalhos para Teams e Outlook.</dd></div>
+          </div>
+
+          <h4>Fontes conectadas</h4>
+          <div class="chips">
+            <span>Listas por unidade operacional</span><span>Dados de campanhas e relacionamentos</span><span>Usuários do Office 365</span><span>Teams</span><span>Power BI</span>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">C</span>Automação da gestão do time</span><span class="s-hint">Escalas, ausências e lembretes</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Plantões, férias, escala presencial e remota, feriados e aniversariantes ficam em listas com visão de calendário. Isso já resolvia a visibilidade; a automação resolveu o timing.</p>
+          <div class="kv">
+            <div><dt>Lembretes à gestão</dt><dd>Avisos automáticos com antecedência para que a liderança organize a cobertura antes da ausência acontecer.</dd></div>
+            <div><dt>Visão de calendário</dt><dd>Plantonistas do mês visíveis para todo o time, com exportação para planilha quando necessário.</dd></div>
+            <div><dt>Feriados mensais</dt><dd>Lista própria para planejar cobertura em datas que afetam a operação.</dd></div>
+          </div>
+          <p>Resultado: o planejamento saiu do modo reativo e passou a ser fechado com um mês de antecedência.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">D</span>Gestão do conhecimento</span><span class="s-hint">Como transformar experiência em material</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>A base de conhecimento foi construída junto com o time. Os colegas mais experientes gravavam, explicavam ou revisavam cada procedimento, e o material virava vídeo curto ou PDF.</p>
+          <h4>O que existe hoje</h4>
+          <div class="chips gold">
+            <span>Vídeos de como solicitar cada acesso</span><span>Procedimentos em PDF</span><span>Catálogo de erros conhecidos</span><span>Catálogo de sistemas periféricos e seus fluxos</span><span>Fluxos por empresa do grupo e parceiros</span><span>Perguntas frequentes de campanhas</span><span>Texto padrão de escalonamento</span><span>Atas semanais</span>
+          </div>
+          <p>Notícias e avisos na página inicial comunicam mudanças de fluxo assim que acontecem, para que o material nunca fique desatualizado sem que o time saiba.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">E</span>Governança e segurança</span><span class="s-hint">Acesso é risco, e risco precisa de trilha</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Gestão de identidades e acessos é uma área auditada. Cada decisão de construção considerou o que um auditor perguntaria: quem tem acesso a quê, com base em qual regra, e onde está a evidência.</p>
+          <div class="kv">
+            <div><dt>Verificação prévia</dt><dd>Checagem de restrições antes de qualquer concessão, evitando liberar acesso a quem não deveria recebê-lo.</dd></div>
+            <div><dt>Menor privilégio fora do IDM</dt><dd>Nos sistemas centrais, o IDM aplica a matriz. Nos periféricos, a Supermatriz virou a fonte única: cada concessão manual passou a seguir o papel definido para a função, e não apenas a experiência de quem estava atendendo.</dd></div>
+            <div><dt>Edição controlada</dt><dd>Alterações nas matrizes concentradas em uma tela própria, não espalhadas por cópias de planilha.</dd></div>
+            <div><dt>Trilha de evidências</dt><dd>Respostas e evidências de auditoria guardadas em biblioteca do time, com acesso imediato para quem estiver de plantão.</dd></div>
+            <div><dt>Revisão de fluxos</dt><dd>Com o processo visível, lacunas passaram a ser levadas ao cliente contratante e os fluxos foram redesenhados.</dd></div>
+            <div><dt>Projetos rastreáveis</dt><dd>Cada implantação registrada com foco, datas, ponto focal e status final.</dd></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">F</span>Aprendizados</span><span class="s-hint">O que ficou de lição</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <div class="lessons">
+            <div class="lesson"><span class="n">1</span><p><strong>Adoção é mais difícil que construção.</strong> Montar o app foi rápido; fazer o time migrar da planilha e incorporar a documentação na rotina exigiu presença, acompanhamento e exemplo.</p></div>
+            <div class="lesson"><span class="n">2</span><p><strong>Ferramenta simples, bem integrada, vence ferramenta sofisticada isolada.</strong> O valor veio de as peças conversarem entre si, não de nenhuma delas ser complexa.</p></div>
+            <div class="lesson"><span class="n">3</span><p><strong>Visibilidade gera questionamento.</strong> Quando o processo ficou documentado, apareceram as lacunas, e com elas a chance de corrigir fluxos que ninguém revisava.</p></div>
+            <div class="lesson"><span class="n">4</span><p><strong>Medir o antes é o que torna o depois crível.</strong> Os 80% e os 13% só existem porque a tratativa foi medida antes e depois da mudança.</p></div>
+          </div>
+        </div>
+      </details>
+
+      <div class="confid narrow">
+        <strong>Sobre confidencialidade:</strong> este case foi anonimizado. Nomes de empresas, marcas, unidades, pessoas e telas originais foram omitidos; a descrição acima representa a estrutura da solução, não seus dados.
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>Tem um processo crítico vivendo em planilha?</h2>
+      <p>Gosto de transformar rotinas frágeis em sistemas que o time inteiro consegue operar.</p>
+      <a href="mailto:ingridpcarneiro@outlook.com" class="btn">E-mail</a>
+      <a href="https://www.linkedin.com/" class="btn" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="index.html" class="btn">Voltar ao portfólio</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Ingrid Carneiro — Inteligência de dados para negócios.</div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
