@@ -10,7 +10,7 @@
   <meta property="og:type" content="article">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #F5F1E8;
@@ -44,7 +44,7 @@
     }
 
     h1, h2, h3, h4 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Source Serif 4', Georgia, serif;
       font-weight: 500;
       line-height: 1.2;
       color: var(--ink);
@@ -65,7 +65,7 @@
       padding: 1.1rem 0;
     }
     nav .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
+    .logo { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
     .back { font-size: .9rem; font-weight: 500; color: var(--ink-soft); }
     .back:hover { color: var(--accent); }
 
@@ -77,7 +77,7 @@
     }
     .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); letter-spacing: -.01em; margin-bottom: 1.4rem; max-width: 900px; }
     .lede {
-      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500;
       font-size: clamp(1.25rem, 2.4vw, 1.55rem); color: var(--accent);
       max-width: 780px; line-height: 1.45; margin-bottom: 2.6rem;
     }
@@ -91,23 +91,20 @@
     /* Numbers strip */
     .numbers { background: var(--accent); color: var(--bg); padding: 3rem 0; }
     .numbers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; }
-    .num strong {
-      display: block; font-family: 'Cormorant Garamond', serif; font-weight: 500;
-      font-size: 3rem; line-height: 1; color: var(--bg); margin-bottom: .5rem;
-    }
-    .num span { font-size: .88rem; color: #CFC8B6; line-height: 1.4; display: block; }
+    .num strong { display: block; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 2.3rem; line-height: 1.1; color: #FFFFFF; margin-bottom: .5rem; letter-spacing: -.01em; }
+    .num span { font-size: .92rem; color: #EAE4D6; line-height: 1.4; display: block; }
 
     /* Sections */
     section { padding: 5rem 0; }
     section.alt { background: var(--bg-soft); }
     .section-label { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
-    .step { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.1rem; margin-right: .4rem; }
+    .step { font-family: 'Source Serif 4', Georgia, serif; color: var(--gold); font-size: 1.1rem; margin-right: .4rem; }
     .section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); margin-bottom: 1.5rem; letter-spacing: -.01em; }
     .prose p { color: var(--ink-soft); font-size: 1.04rem; margin-bottom: 1.2rem; }
     .prose p strong { color: var(--ink); font-weight: 600; }
 
     .pull {
-      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500;
       font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.35; color: var(--accent);
       border-left: 2px solid var(--gold); padding: .3rem 0 .3rem 1.6rem; margin: 2.5rem 0;
     }
@@ -127,10 +124,10 @@
     .flow { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 2.5rem 0 1rem; border: 1px solid var(--border); background: var(--bg-card); }
     .flow-step { padding: 1.8rem 1.6rem; position: relative; }
     .flow-step + .flow-step { border-left: 1px solid var(--border); }
-    .flow-step .q { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.35rem; color: var(--accent); margin-bottom: .4rem; }
+    .flow-step .q { font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500; font-size: 1.35rem; color: var(--accent); margin-bottom: .4rem; }
     .flow-step .k { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .6rem; }
     .flow-step p { font-size: .93rem; color: var(--ink-soft); }
-    .flow-note { font-size: .92rem; color: var(--ink-soft); font-style: italic; }
+    .flow-note { font-family: 'Inter', sans-serif; font-size: .92rem; color: var(--ink-soft); font-style: normal; font-weight: 500; }
 
     /* Panels with wireframes */
     .panels { display: grid; gap: 1.5rem; margin-top: 2.5rem; }
@@ -139,11 +136,11 @@
       background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px;
       padding: 1.8rem 2rem; border-left: 2px solid var(--gold);
     }
-    .panel-body .p-num { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
+    .panel-body .p-num { font-family: 'Source Serif 4', Georgia, serif; font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
     .panel-body h3 { font-size: 1.55rem; margin: .2rem 0 .3rem; }
     .panel-body .who { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: .8rem; }
     .panel-body p { font-size: .95rem; color: var(--ink-soft); }
-    .panel-body .asks { margin-top: .8rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.12rem; color: var(--accent); }
+    .panel-body .asks { margin-top: .8rem; font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500; font-size: 1.12rem; color: var(--accent); }
 
     /* Wireframe primitives */
     .wf {
@@ -195,7 +192,7 @@
       display: flex; justify-content: space-between; align-items: center; gap: 1rem;
     }
     summary::-webkit-details-marker { display: none; }
-    summary .s-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--ink); }
+    summary .s-title { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.45rem; color: var(--ink); }
     summary .s-letter { color: var(--gold); margin-right: .6rem; }
     summary .s-hint { display: block; font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--ink-soft); margin-top: .15rem; }
     summary .plus { font-size: 1.4rem; color: var(--gold); transition: transform .25s; flex-shrink: 0; line-height: 1; }
@@ -235,7 +232,7 @@
       background: var(--bg); border: 1px solid var(--border); padding: 1rem .9rem; border-radius: 2px; position: relative;
     }
     .pipe-step b { display: block; font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: .35rem; font-weight: 500; }
-    .pipe-step strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 500; color: var(--accent); margin-bottom: .3rem; line-height: 1.2; }
+    .pipe-step strong { display: block; font-family: 'Source Serif 4', Georgia, serif; font-size: 1.15rem; font-weight: 500; color: var(--accent); margin-bottom: .3rem; line-height: 1.2; }
     .pipe-step span { font-size: .82rem; color: var(--ink-soft); line-height: 1.45; display: block; }
     .pipe-step:not(:last-child)::after {
       content: '→'; position: absolute; right: -.62rem; top: 50%; transform: translateY(-50%);
@@ -248,7 +245,7 @@
 
     .lessons { display: grid; gap: 1rem; }
     .lesson { display: grid; grid-template-columns: 34px 1fr; gap: .8rem; }
-    .lesson .n { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); line-height: 1.3; }
+    .lesson .n { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3rem; color: var(--gold); line-height: 1.3; }
     .lesson p { margin: 0 !important; }
     .lesson strong { color: var(--ink); }
 

@@ -10,7 +10,7 @@
   <meta property="og:type" content="article">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --bg: #F5F1E8;
@@ -28,7 +28,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-    h1, h2, h3, h4 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; line-height: 1.2; color: var(--ink); }
+    h1, h2, h3, h4 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 500; line-height: 1.2; color: var(--ink); }
     a { color: var(--accent); text-decoration: none; transition: color .2s; }
     a:hover { color: var(--gold); }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
@@ -36,32 +36,32 @@
 
     nav { position: sticky; top: 0; z-index: 100; background: rgba(245, 241, 232, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 1.1rem 0; }
     nav .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
-    .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
+    .logo { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
     .back { font-size: .9rem; font-weight: 500; color: var(--ink-soft); }
     .back:hover { color: var(--accent); }
 
     .hero { padding: 5rem 0 3.5rem; }
     .eyebrow { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
     .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); letter-spacing: -.01em; margin-bottom: 1.4rem; max-width: 900px; }
-    .lede { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.25rem, 2.4vw, 1.55rem); color: var(--accent); max-width: 780px; line-height: 1.45; margin-bottom: 2.6rem; }
+    .lede { font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500; font-size: clamp(1.25rem, 2.4vw, 1.55rem); color: var(--accent); max-width: 780px; line-height: 1.45; margin-bottom: 2.6rem; }
     .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
     .meta dt { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
     .meta dd { font-size: .95rem; color: var(--ink-soft); }
 
     .numbers { background: var(--accent); color: var(--bg); padding: 3rem 0; }
     .numbers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 2rem; }
-    .num strong { display: block; font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 3rem; line-height: 1; color: var(--bg); margin-bottom: .5rem; }
-    .num span { font-size: .88rem; color: #CFC8B6; line-height: 1.4; display: block; }
+    .num strong { display: block; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 2.3rem; line-height: 1.1; color: #FFFFFF; margin-bottom: .5rem; letter-spacing: -.01em; }
+    .num span { font-size: .92rem; color: #EAE4D6; line-height: 1.4; display: block; }
 
     section { padding: 5rem 0; }
     section.alt { background: var(--bg-soft); }
     .section-label { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
-    .step { font-family: 'Cormorant Garamond', serif; color: var(--gold); font-size: 1.1rem; margin-right: .4rem; }
+    .step { font-family: 'Source Serif 4', Georgia, serif; color: var(--gold); font-size: 1.1rem; margin-right: .4rem; }
     .section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); margin-bottom: 1.5rem; letter-spacing: -.01em; }
     .prose p { color: var(--ink-soft); font-size: 1.04rem; margin-bottom: 1.2rem; }
     .prose p strong { color: var(--ink); font-weight: 600; }
 
-    .pull { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.35; color: var(--accent); border-left: 2px solid var(--gold); padding: .3rem 0 .3rem 1.6rem; margin: 2.5rem 0; }
+    .pull { font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500; font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.35; color: var(--accent); border-left: 2px solid var(--gold); padding: .3rem 0 .3rem 1.6rem; margin: 2.5rem 0; }
 
     .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
     .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; padding: 2rem 1.8rem; }
@@ -72,11 +72,11 @@
 
     .capitulos { display: grid; gap: 1.3rem; margin-top: 2.5rem; }
     .capitulo { background: var(--bg-card); border: 1px solid var(--border); border-left: 2px solid var(--gold); border-radius: 2px; padding: 1.8rem 2rem; }
-    .capitulo .c-num { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
+    .capitulo .c-num { font-family: 'Source Serif 4', Georgia, serif; font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
     .capitulo h3 { font-size: 1.5rem; margin: .2rem 0 .3rem; }
     .capitulo .who { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: .8rem; }
     .capitulo p { font-size: .95rem; color: var(--ink-soft); }
-    .capitulo .asks { margin-top: .8rem; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.12rem; color: var(--accent); }
+    .capitulo .asks { margin-top: .8rem; font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500; font-size: 1.12rem; color: var(--accent); }
 
     .timeline { position: relative; margin: 2.5rem 0 1rem; padding-left: 2rem; border-left: 1px solid var(--border); }
     .timeline .ev { margin-bottom: 1.6rem; position: relative; }
@@ -93,7 +93,7 @@
     details[open] { border-color: var(--gold); }
     summary { list-style: none; cursor: pointer; padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
     summary::-webkit-details-marker { display: none; }
-    summary .s-title { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: var(--ink); }
+    summary .s-title { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.45rem; color: var(--ink); }
     summary .s-letter { color: var(--gold); margin-right: .6rem; }
     summary .s-hint { display: block; font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--ink-soft); margin-top: .15rem; }
     summary .plus { font-size: 1.4rem; color: var(--gold); transition: transform .25s; flex-shrink: 0; line-height: 1; }
