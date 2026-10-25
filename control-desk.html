@@ -166,7 +166,7 @@
       <p class="lede">Como tirei a gestão de acessos de uma central de atendimento nacional de planilhas frágeis e de uma documentação dispersa — e construí um ecossistema em que qualquer pessoa do time consegue atender qualquer demanda.</p>
       <dl class="meta">
         <div><dt>Contexto</dt><dd>Área de gestão de identidades e acessos (IAM) de uma central de atendimento nacional, com várias unidades operacionais</dd></div>
-        <div><dt>Meu papel</dt><dd>Diagnóstico, desenho da solução, construção da intranet, dos apps e das automações, e condução da mudança no time</dd></div>
+        <div><dt>Meu papel</dt><dd>Diagnóstico, desenho da solução, construção da intranet, do app de matrizes e das automações, contribuição no app de controle de campanhas e condução da mudança no time</dd></div>
         <div><dt>Usuários</dt><dd>Todo o time de gestão de acessos, além de gestores e áreas parceiras</dd></div>
         <div><dt>Ecossistema</dt><dd>SharePoint · Power Apps · Power Automate · Lists · Planner · Clipchamp · Power BI · Teams</dd></div>
       </dl>
@@ -277,15 +277,16 @@
           <div class="b-num">03</div>
           <h3>Relacionamentos e escalonamento</h3>
           <div class="who">Quem acionar, e como</div>
-          <p>Para cada campanha, o app mostra quem são os pontos de contato, tanto na central quanto no cliente contratante, com atalhos diretos para abrir uma conversa no Teams ou um e-mail no Outlook. Um texto padrão de escalonamento garante que todos acionem as áreas do mesmo jeito.</p>
+          <p>Para cada campanha, o app mostra quem são os pontos de contato, tanto na central quanto no cliente contratante, com atalhos diretos para abrir uma conversa no Teams ou um e-mail no Outlook. Fica em uma tela do próprio app de matrizes, a um clique de distância — tudo junto, no mesmo lugar. Um texto padrão de escalonamento garante que todos acionem as áreas do mesmo jeito.</p>
           <div class="tools">Power Apps · Teams · Outlook</div>
         </article>
 
         <article class="block">
           <div class="b-num">04</div>
           <h3>Controle de campanhas</h3>
-          <div class="who">Da entrada à exceção</div>
-          <p>Um segundo aplicativo e uma área própria na intranet para o ciclo de vida das campanhas: fluxograma do processo, controle individual, perguntas frequentes e uma automação para tratar as exceções. Projetos e implantações ficam registrados com foco, período, ponto focal e status final.</p>
+          <div class="who">A liberação de uma turma inteira, etapa por etapa</div>
+          <p>Quando uma turma nova entra — digamos, 30 pessoas — todas precisam receber os acessos da campanha, do básico ao específico daquele tipo de atendimento, na ordem certa e com a aprovação do responsável por cada sistema. Um segundo aplicativo acompanha esse ciclo: o que já foi liberado, o que está pendente, o que deu problema, o que precisou de aprovação do owner e o que teve de ser escalonado — por exemplo, quando o aprovador estava ausente. A área de campanhas na intranet reúne ainda o fluxograma do processo, o controle individual, as perguntas frequentes e o tratamento de exceções.</p>
+          <p>Esse app foi construído em parceria — minha contribuição foi no desenho e na integração ao ecossistema. Ele fica logo abaixo do app de matrizes na intranet, porque os dois funcionam juntos: a matriz diz <em>o que</em> liberar; o controle mostra <em>em que ponto</em> cada liberação está.</p>
           <div class="tools">Power Apps · Lists · Power Automate</div>
         </article>
 
@@ -293,8 +294,8 @@
           <div class="b-num">05</div>
           <h3>Gestão do time</h3>
           <div class="who">Escalas que não pegam ninguém de surpresa</div>
-          <p>Calendário de plantonistas, escala de férias, escala presencial e remota, feriados do mês e aniversariantes, todos em listas. Lembretes automáticos avisam a gestão com antecedência para organizar a cobertura das ausências — e as escalas passaram a ser fechadas com um mês de antecedência.</p>
-          <div class="tools">Lists · Power Automate</div>
+          <p>Calendário de plantonistas, escala de férias, escala presencial e remota, feriados nacionais e regionais e aniversariantes, todos em listas com visão de calendário. Lembretes automáticos, disparados alguns dias antes, avisam a gestão de quem estará ausente, de uma unidade que não vai operar por feriado regional ou de um feriado nacional — e as escalas passaram a ser fechadas com um mês de antecedência. Sem aplicativo: só listas bem estruturadas e uma automação simples.</p>
+          <div class="tools">Lists em formato calendário · lembretes automáticos</div>
         </article>
 
         <article class="block">
@@ -404,8 +405,8 @@
           <div class="kv">
             <div><dt>Camada de dados</dt><dd>Listas do SharePoint: matrizes por unidade, relacionamentos de campanha, sistemas e acessos, escalas, plantões, feriados, projetos.</dd></div>
             <div><dt>Camada de documentos</dt><dd>Bibliotecas para procedimentos, auditorias, atas e materiais de treinamento.</dd></div>
-            <div><dt>Camada de aplicação</dt><dd>Dois apps em Power Apps: matrizes e controle de campanhas.</dd></div>
-            <div><dt>Camada de automação</dt><dd>Fluxos que avisam a gestão sobre escalas e ausências e tratam exceções de campanha.</dd></div>
+            <div><dt>Camada de aplicação</dt><dd>Dois apps em Power Apps: o de matrizes (construção própria) e o de controle de campanhas (construído em parceria).</dd></div>
+            <div><dt>Camada de automação</dt><dd>Lembretes automáticos que avisam a gestão sobre escalas, ausências e feriados, e o apoio ao tratamento de exceções na liberação das campanhas.</dd></div>
             <div><dt>Camada de análise</dt><dd>Painel em Power BI com a visão administrativa consolidada, acessível de dentro do app.</dd></div>
             <div><dt>Camada de colaboração</dt><dd>Teams e Outlook para escalonamento, Planner para projetos, Clipchamp para vídeos.</dd></div>
           </div>
@@ -421,6 +422,10 @@
           <h4>A lógica de uma matriz de acessos</h4>
           <div class="chain"><span>Campanha</span><i>→</i><span>Cargo</span><i>→</i><span>Role</span><i>→</i><span>Permissões por sistema</span></div>
           <p>É o modelo RBAC na prática: o acesso não é concedido à pessoa, e sim ao papel que ela ocupa. Para qualquer combinação de campanha e cargo, o app responde quais roles e permissões aquela pessoa precisa receber — tanto nos sistemas centrais, aplicados pelo IDM, quanto nos sistemas periféricos, concedidos manualmente. É a mesma pergunta que antes exigia abrir a planilha certa, encontrar a aba certa e torcer para ninguém ter alterado a linha errada.</p>
+
+          <h4>A ordem importa</h4>
+          <div class="chain"><span>Criação da identidade</span><i>→</i><span>Diretório corporativo</span><i>→</i><span>Acessos básicos</span><i>→</i><span>Acessos específicos da campanha</span></div>
+          <p>Muitos acessos têm pré-requisito: não se libera um sistema sem que a identidade exista e o acesso ao diretório corporativo esteja ativo, por exemplo. O app de matrizes já organiza os acessos de cada campanha nessa sequência de dependências, para que a liberação de uma turma siga sempre o mesmo caminho. E nenhum acesso é automático: todos passam pela aprovação do responsável pelo sistema.</p>
 
           <h4>Telas</h4>
           <div class="kv">
@@ -444,11 +449,12 @@
           <span class="plus" aria-hidden="true">+</span>
         </summary>
         <div class="d-body">
-          <p>Plantões, férias, escala presencial e remota, feriados e aniversariantes ficam em listas com visão de calendário. Isso já resolvia a visibilidade; a automação resolveu o timing.</p>
+          <p>Plantões, férias, escala presencial e remota, feriados e aniversariantes ficam em listas com visão de calendário — basta uma coluna de data bem definida. Isso já resolvia a visibilidade; os lembretes resolveram o timing.</p>
           <div class="kv">
-            <div><dt>Lembretes à gestão</dt><dd>Avisos automáticos com antecedência para que a liderança organize a cobertura antes da ausência acontecer.</dd></div>
+            <div><dt>Lembretes à gestão</dt><dd>Avisos automáticos alguns dias antes de cada evento, para que a liderança organize a cobertura antes da ausência acontecer.</dd></div>
             <div><dt>Visão de calendário</dt><dd>Plantonistas do mês visíveis para todo o time, com exportação para planilha quando necessário.</dd></div>
-            <div><dt>Feriados mensais</dt><dd>Lista própria para planejar cobertura em datas que afetam a operação.</dd></div>
+            <div><dt>Feriados nacionais e regionais</dt><dd>Lista própria para planejar a cobertura quando uma unidade não opera por feriado local ou quando o time inteiro está fora.</dd></div>
+            <div><dt>Como foi feito</dt><dd>Na época, os lembretes eram configurados a partir das próprias listas; hoje, o mesmo resultado exige um gatilho no Power Automate. Em ambos os casos, uma automação simples, sem aplicativo.</dd></div>
           </div>
           <p>Resultado: o planejamento saiu do modo reativo e passou a ser fechado com um mês de antecedência.</p>
         </div>
