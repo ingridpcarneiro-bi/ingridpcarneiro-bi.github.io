@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Matriz de Acessos | Ingrid Carneiro</title>
+  <meta name="description" content="Case: o aplicativo em Power Apps que substituiu as planilhas de matriz de acesso RBAC de uma central de atendimento nacional — 13 telas, 10 fontes de dados e uma decisão de arquitetura só de leitura.">
+  <meta property="og:title" content="O acesso certo, para o papel certo, em três cliques | Case Ingrid Carneiro">
+  <meta property="og:description" content="Aplicativo em Power Apps que reúne as matrizes de acesso de oito unidades operacionais, com filtro em cascata, catálogo de sistemas e escalonamento a um clique.">
+  <meta property="og:type" content="article">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F5F1E8; --bg-card: #FFFFFF; --bg-soft: #EFE9DC;
+      --ink: #1C1C1C; --ink-soft: #595550;
+      --accent: #0F3D2E; --accent-hover: #185540;
+      --gold: #B08D57; --gold-soft: rgba(176, 141, 87, 0.18);
+      --border: #DDD5C4;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, h4 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 500; line-height: 1.2; color: var(--ink); }
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--gold); }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+    .narrow { max-width: 760px; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(245, 241, 232, 0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 1.1rem 0; }
+    nav .container { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    .logo { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.6rem; font-weight: 600; color: var(--accent); letter-spacing: .05em; }
+    .back { font-size: .9rem; font-weight: 500; color: var(--ink-soft); }
+    .back:hover { color: var(--accent); }
+
+    .hero { padding: 5rem 0 3.5rem; }
+    .eyebrow { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 4rem); letter-spacing: -.01em; margin-bottom: 1.4rem; max-width: 900px; }
+    .lede { font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500; font-size: clamp(1.25rem, 2.4vw, 1.55rem); color: var(--accent); max-width: 780px; line-height: 1.45; margin-bottom: 2.6rem; }
+    .meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .meta dt { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .3rem; }
+    .meta dd { font-size: .95rem; color: var(--ink-soft); }
+
+    .numbers { background: var(--accent); color: var(--bg); padding: 3rem 0; }
+    .numbers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 2rem; }
+    .num strong { display: block; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 2.3rem; line-height: 1.1; color: #FFFFFF; margin-bottom: .5rem; letter-spacing: -.01em; }
+    .num span { font-size: .92rem; color: #EAE4D6; line-height: 1.4; display: block; }
+
+    section { padding: 5rem 0; }
+    section.alt { background: var(--bg-soft); }
+    .section-label { font-size: .78rem; font-weight: 500; letter-spacing: .25em; text-transform: uppercase; color: var(--gold); margin-bottom: .8rem; }
+    .step { font-family: 'Source Serif 4', Georgia, serif; color: var(--gold); font-size: 1.1rem; margin-right: .4rem; }
+    .section-title { font-size: clamp(1.9rem, 4vw, 2.7rem); margin-bottom: 1.5rem; letter-spacing: -.01em; }
+    .prose p { color: var(--ink-soft); font-size: 1.04rem; margin-bottom: 1.2rem; }
+    .prose p strong { color: var(--ink); font-weight: 600; }
+    .pull { font-family: 'Inter', sans-serif; font-style: normal; font-weight: 500; font-size: clamp(1.4rem, 3vw, 1.9rem); line-height: 1.35; color: var(--accent); border-left: 2px solid var(--gold); padding: .3rem 0 .3rem 1.6rem; margin: 2.5rem 0; }
+
+    .before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 2.5rem; border: 1px solid var(--border); background: var(--bg-card); }
+    .ba-col { padding: 1.8rem; }
+    .ba-col + .ba-col { border-left: 1px solid var(--border); background: #FBF9F4; }
+    .ba-col h3 { font-size: 1.45rem; margin-bottom: 1rem; }
+    .ba-col.before h3 { color: var(--ink-soft); }
+    .ba-col.after h3 { color: var(--accent); }
+    .ba-col ul { list-style: none; display: grid; gap: .75rem; }
+    .ba-col li { font-size: .95rem; color: var(--ink-soft); padding-left: 1.3rem; position: relative; }
+    .ba-col li::before { content: ''; position: absolute; left: 0; top: .72rem; width: 8px; height: 1px; background: var(--gold); }
+
+    .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2.5rem; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; padding: 2rem 1.8rem; }
+    .card .card-tag { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .7rem; }
+    .card h3 { font-size: 1.5rem; color: var(--accent); margin-bottom: .8rem; }
+    .card p { color: var(--ink-soft); font-size: .97rem; }
+    .card p + p { margin-top: .8rem; }
+
+    .blocks { display: grid; gap: 1.3rem; margin-top: 2.5rem; }
+    .block { background: var(--bg-card); border: 1px solid var(--border); border-left: 2px solid var(--gold); border-radius: 2px; padding: 1.8rem 2rem; }
+    .block .b-num { font-family: 'Source Serif 4', Georgia, serif; font-size: 1rem; color: var(--gold); letter-spacing: .1em; }
+    .block h3 { font-size: 1.5rem; margin: .2rem 0 .3rem; }
+    .block .who { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 500; margin-bottom: .8rem; }
+    .block p { font-size: .95rem; color: var(--ink-soft); }
+    .block p + p { margin-top: .8rem; }
+    .block .tools { margin-top: .9rem; font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+
+    .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-top: 2.5rem; }
+    .result { border-top: 2px solid var(--gold); padding-top: 1.2rem; }
+    .result h4 { font-size: 1.35rem; margin-bottom: .5rem; color: var(--accent); }
+    .result p { font-size: .95rem; color: var(--ink-soft); }
+
+    .decisions { display: grid; margin-top: 2.5rem; border-top: 1px solid var(--border); }
+    .decision { display: grid; grid-template-columns: 1fr 1.6fr; gap: 2rem; padding: 1.6rem 0; border-bottom: 1px solid var(--border); }
+    .decision h4 { font-size: 1.3rem; }
+    .decision p { font-size: .96rem; color: var(--ink-soft); }
+
+    details { background: var(--bg-card); border: 1px solid var(--border); border-radius: 2px; margin-bottom: 1rem; transition: border-color .2s; }
+    details[open] { border-color: var(--gold); }
+    summary { list-style: none; cursor: pointer; padding: 1.4rem 1.6rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+    summary::-webkit-details-marker { display: none; }
+    summary .s-title { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.45rem; color: var(--ink); }
+    summary .s-letter { color: var(--gold); margin-right: .6rem; }
+    summary .s-hint { display: block; font-family: 'Inter', sans-serif; font-size: .85rem; color: var(--ink-soft); margin-top: .15rem; }
+    summary .plus { font-size: 1.4rem; color: var(--gold); transition: transform .25s; flex-shrink: 0; line-height: 1; }
+    details[open] summary .plus { transform: rotate(45deg); }
+    summary:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .d-body { padding: 1.6rem 1.6rem 1.8rem; border-top: 1px solid var(--border); }
+    .d-body p { color: var(--ink-soft); font-size: .97rem; margin-bottom: 1rem; }
+    .d-body h4 { font-size: 1.2rem; color: var(--accent); margin: 1.6rem 0 .6rem; }
+    .d-body h4:first-child { margin-top: 0; }
+    .kv { display: grid; gap: .9rem; margin: .8rem 0 1.2rem; }
+    .kv div { display: grid; grid-template-columns: 200px 1fr; gap: 1.2rem; padding-bottom: .9rem; border-bottom: 1px dashed var(--border); }
+    .kv div:last-child { border-bottom: 0; }
+    .kv dt { font-weight: 600; font-size: .93rem; color: var(--ink); }
+    .kv dd { font-size: .93rem; color: var(--ink-soft); }
+    .chips { display: flex; flex-wrap: wrap; gap: .5rem; margin: .6rem 0 1.2rem; }
+    .chips span { font-size: .85rem; padding: .35rem .8rem; border: 1px solid var(--border); border-radius: 999px; background: var(--bg); color: var(--ink-soft); }
+    .chips.gold span { border-color: var(--gold); color: var(--accent); background: var(--gold-soft); }
+
+    .chain { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin: .8rem 0 1.4rem; }
+    .chain span { font-size: .88rem; padding: .55rem .9rem; border: 1px solid var(--border); background: var(--bg); border-radius: 2px; color: var(--accent); font-weight: 500; }
+    .chain i { color: var(--gold); font-style: normal; }
+
+    .lessons { display: grid; gap: 1rem; }
+    .lesson { display: grid; grid-template-columns: 34px 1fr; gap: .8rem; }
+    .lesson .n { font-family: 'Source Serif 4', Georgia, serif; font-size: 1.3rem; color: var(--gold); line-height: 1.3; }
+    .lesson p { margin: 0 !important; }
+    .lesson strong { color: var(--ink); }
+
+    .confid { margin-top: 3rem; padding: 1.4rem 1.6rem; border: 1px dashed var(--gold); font-size: .9rem; color: var(--ink-soft); background: var(--bg); }
+    .related { margin-top: 2.5rem; padding: 1.6rem 1.8rem; background: var(--bg-card); border: 1px solid var(--border); border-left: 2px solid var(--gold); border-radius: 2px; }
+    .related .r-tag { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
+    .related h3 { font-size: 1.4rem; margin-bottom: .5rem; }
+    .related p { font-size: .96rem; color: var(--ink-soft); margin-bottom: .8rem; }
+    .related a { font-weight: 500; font-size: .95rem; }
+
+    .cta { text-align: center; padding: 5.5rem 0; background: var(--accent); color: var(--bg); }
+    .cta h2 { color: var(--bg); font-size: clamp(1.9rem, 4vw, 2.6rem); margin-bottom: 1rem; }
+    .cta p { color: #D9D4C7; max-width: 560px; margin: 0 auto 2.2rem; }
+    .btn { display: inline-flex; align-items: center; padding: .85rem 1.6rem; font-weight: 500; font-size: .92rem; border-radius: 2px; transition: all .25s; letter-spacing: .02em; border: 1px solid var(--gold); color: var(--bg); margin: .3rem; }
+    .btn:hover { background: var(--gold); color: var(--accent); }
+    footer { padding: 2rem 0; border-top: 1px solid rgba(255,255,255,.1); background: var(--accent); color: #A89D7E; text-align: center; font-size: .88rem; }
+
+    @media (max-width: 760px) {
+      .duo, .before-after { grid-template-columns: 1fr; }
+      .ba-col + .ba-col { border-left: 0; border-top: 1px solid var(--border); }
+      .decision { grid-template-columns: 1fr; gap: .4rem; }
+      .kv div { grid-template-columns: 1fr; gap: .2rem; }
+      section { padding: 3.5rem 0; }
+      .hero { padding: 3.5rem 0 2.5rem; }
+    }
+    @media (max-width: 520px) {
+      .container { padding: 0 1rem; }
+      .logo { font-size: 1.3rem; }
+      summary { padding: 1.2rem 1.1rem; }
+      .d-body { padding: 1.3rem 1.1rem 1.5rem; }
+      .card, .block, .ba-col { padding: 1.5rem 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="index.html" class="logo">Ingrid Carneiro</a>
+      <a href="index.html#projetos" class="back">← Voltar aos projetos</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="eyebrow">Case · Power Apps · Matriz de acessos RBAC</div>
+      <h1>O acesso certo, para o papel certo, em três cliques.</h1>
+      <p class="lede">O aplicativo que tirou as matrizes de acesso de oito unidades operacionais das planilhas compartilhadas — e respondeu, em uma única tela, a pergunta que antes exigia abrir a planilha certa e torcer para ninguém ter alterado a linha errada.</p>
+      <dl class="meta">
+        <div><dt>Contexto</dt><dd>Área de gestão de identidades e acessos (IAM) de uma central de atendimento nacional, com oito unidades e áreas operacionais</dd></div>
+        <div><dt>Meu papel</dt><dd>Modelagem dos dados, desenho das telas, construção do aplicativo e condução da migração das planilhas</dd></div>
+        <div><dt>Usuários</dt><dd>Exclusivamente o time de gestão de identidades e acessos — a matriz não é aberta a outras áreas</dd></div>
+        <div><dt>Stack</dt><dd>Power Apps (canvas) · Listas do SharePoint · Usuários do Office 365 · Teams · Outlook · Power BI</dd></div>
+      </dl>
+    </div>
+  </header>
+
+  <div class="numbers">
+    <div class="container numbers-grid">
+      <div class="num"><strong>13</strong><span>telas, de um hub de navegação à visão consolidada</span></div>
+      <div class="num"><strong>10</strong><span>fontes de dados conectadas, todas governadas</span></div>
+      <div class="num"><strong>8</strong><span>matrizes de unidades e áreas, antes em planilhas separadas</span></div>
+      <div class="num"><strong>2</strong><span>pessoas autorizadas a editar a base, para preservar a lisura da matriz</span></div>
+      <div class="num"><strong>0</strong><span>operações de escrita no aplicativo: ele é camada de leitura por decisão de projeto</span></div>
+      <div class="num"><strong>R$ 0</strong><span>de custo adicional — só ferramentas já licenciadas</span></div>
+    </div>
+  </div>
+
+  <!-- 1. CONTEXTO -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">01</span>Contexto e dor</div>
+        <h2 class="section-title">A pergunta era simples. Achar a resposta, não.</h2>
+        <p>Em uma central de atendimento, a pergunta que o time de acessos responde todos os dias é sempre a mesma: <strong>esta pessoa, nesta campanha, neste cargo — quais acessos ela precisa receber?</strong> A resposta vive na matriz de acesso baseada em papéis (RBAC), que para cada combinação de campanha e função define os perfis e as permissões em cada sistema.</p>
+        <p>Essa matriz existia. O problema era onde: em <strong>planilhas compartilhadas, uma por unidade operacional</strong>, editadas por várias pessoas ao mesmo tempo, sem controle de alteração. Responder à pergunta significava descobrir qual planilha era a da unidade, abrir a aba certa, filtrar a campanha à mão e confiar que a linha não havia sido mexida. Já havia acontecido perda de informação.</p>
+        <p>E a matriz não terminava no perfil a conceder. Cada linha carregava também o <strong>pré-requisito</strong> do acesso, o <strong>SLA em dias úteis</strong>, a prioridade e as ações necessárias. Esses campos já existiam na planilha e foram preservados integralmente no modelo: a mudança não foi de conteúdo, foi de estrutura e de controle.</p>
+        <p>Havia ainda um segundo tipo de pergunta, igualmente diária: <strong>quem eu aciono?</strong> Para tratar uma exceção em uma campanha, o time precisava saber quem era o ponto de contato interno, quem era o contato no cliente contratante e quem respondia pela plataforma do fornecedor. Esses contatos estavam em outra planilha, ou em ninguém.</p>
+      </div>
+
+      <div class="before-after">
+        <div class="ba-col before">
+          <h3>Antes</h3>
+          <ul>
+            <li>Uma planilha compartilhada por unidade, sem controle de alteração</li>
+            <li>Qualquer pessoa com o arquivo em mãos podia alterar qualquer linha</li>
+            <li>Filtrar campanha à mão, aba por aba</li>
+            <li>Nenhuma visão que cruzasse todas as unidades</li>
+            <li>Contatos de escalonamento em outro arquivo, ou no conhecimento implícito do time</li>
+            <li>Sem rastro de quem alterou o quê</li>
+          </ul>
+        </div>
+        <div class="ba-col after">
+          <h3>Depois</h3>
+          <ul>
+            <li>Uma lista estruturada por unidade, com histórico de versões nativo</li>
+            <li>Edição por formulário na base, restrita a duas pessoas responsáveis</li>
+            <li>Seleção da campanha em uma caixa de busca, com a tabela filtrando na hora</li>
+            <li>Visão consolidada das oito matrizes em um painel próprio</li>
+            <li>Contatos da campanha na mesma aplicação, com atalho para acionar</li>
+            <li>Autor e data de cada alteração registrados pela plataforma</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. INSIGHT -->
+  <section class="alt">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">02</span>A decisão de arquitetura</div>
+        <h2 class="section-title">Um aplicativo que não escreve nada.</h2>
+        <p>A tentação, em um projeto assim, é fazer o app resolver tudo: consultar e também editar. Eu escolhi separar as duas coisas. O aplicativo <strong>não tem uma única operação de escrita</strong> — nenhuma gravação direta na base. A edição acontece na origem, por formulário, e é operada por <strong>apenas duas pessoas responsáveis</strong> do time.</p>
+        <p>A razão é de governança, não de esforço. Matriz de acesso é artefato auditado: o que importa é que a alteração tenha autor, data e aprovação rastreáveis. Deixando a edição na lista de origem, com permissão de quem é dono daquela matriz, o histórico de versões nativo da plataforma passa a ser a trilha de auditoria — de graça, sem eu construir nada. O app assume um papel só: <strong>ser a camada de leitura confiável</strong> sobre esse dado.</p>
+        <p>Concentrar a edição em duas pessoas foi a outra metade da decisão. Matriz de acesso editada por muita gente é matriz que perde lisura: divergências aparecem sem que ninguém saiba explicar a origem. Com a alteração concentrada em quem responde por ela, o dado se mantém consistente e sempre há a quem perguntar quando uma linha muda.</p>
+      </div>
+      <div class="duo">
+        <div class="card">
+          <div class="card-tag">Princípio 1</div>
+          <h3>Uma lista por unidade, uma visão para todas</h3>
+          <p>Cada unidade mantém a sua própria matriz como lista independente. Isso mantém a manutenção organizada por escopo, evita que uma correção pontual dispute espaço com todas as outras unidades e permite conferir uma matriz sem filtrar o resto. A visão consolidada é construída por cima — não no lugar das listas.</p>
+        </div>
+        <div class="card">
+          <div class="card-tag">Princípio 2</div>
+          <h3>Consulta e ação no mesmo lugar</h3>
+          <p>Descobrir qual perfil conceder e descobrir quem aprovar eram duas buscas separadas. No app viraram a mesma sessão de trabalho: a tela de relacionamentos parte da mesma campanha da matriz e entrega o contato já com o atalho para abrir conversa ou e-mail, sem copiar endereço de lugar nenhum.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SOLUÇÃO -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">03</span>A solução</div>
+        <h2 class="section-title">Treze telas, quatro tipos de pergunta.</h2>
+        <p>O aplicativo tem treze telas, mas elas se organizam em quatro funções. Todas partem do mesmo hub, e todas trazem no cabeçalho o nome e o cargo de quem está usando, lidos do diretório corporativo.</p>
+      </div>
+
+      <div class="blocks">
+        <article class="block">
+          <div class="b-num">01</div>
+          <h3>Hub de navegação</h3>
+          <div class="who">Por onde todo mundo entra</div>
+          <p>Tela inicial que cumprimenta a pessoa pelo nome e dá acesso direto a cada matriz, à visão consolidada, ao catálogo de sistemas e aos relacionamentos. A navegação é plana de propósito: nenhuma consulta exige mais de dois cliques a partir daqui.</p>
+          <div class="tools">Power Apps · Usuários do Office 365</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">02</div>
+          <h3>Matrizes por unidade e por área</h3>
+          <div class="who">A consulta do dia a dia</div>
+          <p>Oito telas com o mesmo padrão de interação: uma caixa de seleção lista as campanhas daquela unidade sem repetição, e escolher uma filtra a tabela na hora. Um botão limpa a seleção e devolve a matriz inteira. A tabela permite ordenar por qualquer coluna e se reorganiza em telas menores.</p>
+          <p>Cada linha entrega os nove atributos do modelo: código do agrupamento, campanha, sistema, perfil, segmento, prioridade, SLA em dias úteis, pré-requisito e as ações a executar. A matriz da área de apoio tem ainda uma coluna de prazo calculado em dias úteis, porque ali o SLA precisava ser lido já convertido.</p>
+          <div class="tools">Power Apps · Listas do SharePoint</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">03</div>
+          <h3>Relacionamentos e escalonamento</h3>
+          <div class="who">Quem acionar, e como</div>
+          <p>A tela mais trabalhada do app. Dois filtros em cascata: escolher o código do agrupamento reduz a lista de campanhas apenas às daquele contrato — não é um segundo filtro independente, é um filtro que se alimenta da escolha anterior. Isso elimina a combinação impossível antes de ela ser feita.</p>
+          <p>Selecionada a campanha, três blocos mostram os pontos de contato: o relacionamento interno, o do cliente contratante e o da plataforma do fornecedor, com a data da última atualização de cada registro visível. E duas ações diretas: um clique abre a conversa no Teams com o contato certo, outro gera o e-mail já com os destinatários das duas pontas preenchidos.</p>
+          <div class="tools">Power Apps · Teams · Outlook</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">04</div>
+          <h3>Catálogo de sistemas corporativos</h3>
+          <div class="who">O universo que o IDM não cobre</div>
+          <p>Uma tela à parte para os sistemas que não são controlados pelo gestor de identidades corporativo — legados e ferramentas de terceiros, onde a concessão é manual e cada um tem o seu fluxo. Lista o sistema, o sistema de origem do acesso e a observação sobre quem aprova. É a resposta rápida para a pergunta que mais travava o atendimento: neste sistema aqui, quem autoriza?</p>
+          <div class="tools">Power Apps · Tabela estruturada</div>
+        </article>
+
+        <article class="block">
+          <div class="b-num">05</div>
+          <h3>Visão consolidada</h3>
+          <div class="who">Para quem precisa ver o todo</div>
+          <p>As oito matrizes reunidas em um relatório de Power BI, aberto de dentro do próprio aplicativo. Serve ao olhar que a tela de uma unidade não alcança: comparar perfis entre unidades, encontrar divergência de SLA para o mesmo sistema, responder a uma pergunta de auditoria que atravessa toda a operação. A consulta operacional continua na tela da unidade; a visão analítica mora aqui.</p>
+          <div class="tools">Power BI · Power Apps</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. RESULTADO -->
+  <section class="alt">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">04</span>O que mudou</div>
+        <h2 class="section-title">O dado saiu da planilha e o atendimento saiu da busca.</h2>
+      </div>
+      <div class="results">
+        <div class="result">
+          <h4>Fim da planilha compartilhada</h4>
+          <p>As oito matrizes migraram para listas estruturadas, com tipo de dado definido e histórico de versões nativo. O risco de edição simultânea sem rastro deixou de existir.</p>
+        </div>
+        <div class="result">
+          <h4>Consulta em segundos</h4>
+          <p>O que exigia abrir arquivo, achar aba e filtrar à mão virou uma seleção de campanha com a tabela respondendo na hora.</p>
+        </div>
+        <div class="result">
+          <h4>Edição com dono claro</h4>
+          <p>A alteração passou a ser feita por duas pessoas responsáveis, em formulário na base, em vez de por qualquer pessoa com o arquivo aberto.</p>
+        </div>
+        <div class="result">
+          <h4>Escalonamento sem procurar contato</h4>
+          <p>O contato das três pontas passou a vir junto com a campanha, com atalho para acionar. Uma busca inteira saiu do processo.</p>
+        </div>
+        <div class="result">
+          <h4>Trilha de auditoria sem construir nada</h4>
+          <p>Mantendo a escrita na origem, o histórico de versões da plataforma virou a evidência de alteração — resultado de uma decisão de arquitetura, não de desenvolvimento.</p>
+        </div>
+        <div class="result">
+          <h4>Base para a análise</h4>
+          <p>Com o dado estruturado, a visão consolidada em Power BI passou a ser possível. Na planilha, não era.</p>
+        </div>
+      </div>
+      <p class="pull narrow">Um aplicativo de consulta bem desenhado vale mais que um aplicativo que faz tudo e ninguém confia.</p>
+    </div>
+  </section>
+
+  <!-- 5. DECISÕES -->
+  <section>
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">05</span>Decisões que fizeram diferença</div>
+        <h2 class="section-title">O que eu escolhi — e por quê.</h2>
+      </div>
+      <div class="decisions">
+        <div class="decision">
+          <h4>Só leitura, de propósito</h4>
+          <p>Nenhuma gravação no aplicativo. A edição ficou na origem, em formulário na própria base, operada por duas pessoas responsáveis — e o histórico de versões nativo passou a ser a trilha de auditoria. Replicar a edição dentro do app teria sido mais vistoso e teria espalhado por mais mãos justamente o ponto que precisava de controle.</p>
+        </div>
+        <div class="decision">
+          <h4>Uma lista por unidade, não uma tabela gigante</h4>
+          <p>Juntar tudo em uma base única seria mais elegante no diagrama e pior na operação: cada correção pontual passaria a disputar espaço com todas as outras unidades, e conferir uma matriz exigiria filtrar o resto. A consolidação acontece na camada de análise, onde ela não atrapalha.</p>
+        </div>
+        <div class="decision">
+          <h4>Filtro em cascata, não dois filtros soltos</h4>
+          <p>Na tela de relacionamentos, a segunda escolha só oferece o que é compatível com a primeira. Custa uma linha de lógica a mais e elimina a combinação inválida antes do erro — em vez de exibir uma mensagem depois dele.</p>
+        </div>
+        <div class="decision">
+          <h4>Mesmo padrão em todas as matrizes</h4>
+          <p>As oito telas de unidade repetem a mesma estrutura: seleção, tabela, limpar, voltar. Quem aprende uma, sabe operar todas — e quem precisar criar a nona unidade já tem o molde.</p>
+        </div>
+        <div class="decision">
+          <h4>Identidade vinda do diretório, não digitada</h4>
+          <p>Nome e cargo do usuário são lidos do diretório corporativo em tempo de execução. Além da personalização, é a base para evoluir o app com visibilidade diferente por perfil, sem cadastro paralelo de usuários.</p>
+        </div>
+        <div class="decision">
+          <h4>Nenhuma licença nova</h4>
+          <p>Tudo construído sobre o ambiente Microsoft que a empresa já licenciava. Sem compra a aprovar, sem fornecedor externo e dentro da governança — o que tirou o projeto da fila de orçamento e acelerou a adoção, porque o time já conhecia o ambiente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. APROFUNDAR -->
+  <section class="alt" id="aprofundar">
+    <div class="container">
+      <div class="narrow prose">
+        <div class="section-label"><span class="step">06</span>Para quem quer se aprofundar</div>
+        <h2 class="section-title">Por dentro do aplicativo.</h2>
+        <p>O modelo de dados, as escolhas de construção e o que eu faria diferente. Sem código e sem telas originais. Abra a seção que interessar.</p>
+      </div>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">A</span>O modelo de dados</span><span class="s-hint">Nove atributos e a lógica do RBAC</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <h4>A cadeia que a matriz descreve</h4>
+          <div class="chain"><span>Agrupamento</span><i>→</i><span>Campanha</span><i>→</i><span>Perfil</span><i>→</i><span>Sistema</span><i>→</i><span>Permissões</span></div>
+          <p>É o RBAC na prática: o acesso não é concedido à pessoa, e sim ao papel que ela ocupa. Dada uma campanha e uma função, a matriz responde quais perfis e permissões aquela pessoa precisa receber em cada sistema.</p>
+
+          <h4>Os atributos de cada linha</h4>
+          <div class="kv">
+            <div><dt>Agrupamento e campanha</dt><dd>Identificam o contrato e a operação específica. É a chave de leitura de toda a matriz.</dd></div>
+            <div><dt>Sistema e perfil</dt><dd>O que conceder: em qual sistema, com qual perfil. O par que responde à pergunta central.</dd></div>
+            <div><dt>Segmento</dt><dd>Separa o tipo de atendimento dentro da mesma campanha, onde o perfil muda conforme o segmento.</dd></div>
+            <div><dt>Prioridade</dt><dd>Ordena a liberação quando uma turma inteira precisa ser atendida de uma vez.</dd></div>
+            <div><dt>SLA em dias úteis</dt><dd>O prazo acordado para a concessão daquele acesso. Na matriz de apoio, também já calculado.</dd></div>
+            <div><dt>Pré-requisito</dt><dd>O que precisa existir antes. Nenhum acesso específico é liberado sem a identidade criada e os acessos básicos ativos.</dd></div>
+            <div><dt>Ações e tarefas</dt><dd>O procedimento daquela linha: o que de fato executar para conceder. É onde o conhecimento implícito foi parar.</dd></div>
+          </div>
+
+          <h4>A ordem importa</h4>
+          <div class="chain"><span>Identidade criada</span><i>→</i><span>Diretório corporativo</span><i>→</i><span>Acessos básicos</span><i>→</i><span>Acessos da campanha</span></div>
+          <p>O campo de pré-requisito existe porque a liberação é sequencial. Modelar essa dependência na própria matriz foi o que permitiu que a liberação de uma turma seguisse sempre o mesmo caminho, independentemente de quem estivesse atendendo.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">B</span>As telas, uma a uma</span><span class="s-hint">Treze telas e o que cada grupo resolve</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <div class="kv">
+            <div><dt>Hub inicial</dt><dd>Saudação pelo nome e navegação para todas as frentes. Nenhuma consulta a mais de dois cliques.</dd></div>
+            <div><dt>Oito matrizes</dt><dd>Uma por unidade ou área, com o mesmo padrão de seleção, filtro e limpeza.</dd></div>
+            <div><dt>Catálogo de sistemas</dt><dd>Sistemas fora do gestor de identidades, com o sistema de origem e a observação de quem aprova.</dd></div>
+            <div><dt>Relacionamentos</dt><dd>Filtros em cascata, contatos das três pontas, data da última atualização e ações de acionamento.</dd></div>
+            <div><dt>Visão consolidada</dt><dd>Ponte para o relatório de Power BI que reúne todas as matrizes.</dd></div>
+          </div>
+          <h4>O padrão de interação repetido</h4>
+          <div class="chain"><span>Selecionar campanha</span><i>→</i><span>Tabela filtra</span><i>→</i><span>Ordenar coluna</span><i>→</i><span>Limpar</span></div>
+          <p>A lista de campanhas de cada caixa de seleção é gerada a partir dos valores distintos da própria matriz — não há lista fixa para manter em paralelo. Quando uma campanha nova entra na matriz, ela aparece no filtro sem nenhuma alteração no aplicativo.</p>
+          <h4>Fontes conectadas</h4>
+          <div class="chips">
+            <span>Oito matrizes por unidade e área</span><span>Base de campanhas e relacionamentos</span><span>Catálogo de sistemas</span><span>Usuários do Office 365</span><span>Teams</span><span>Power BI</span>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">C</span>Consulta e ação na mesma tela</span><span class="s-hint">Filtro em cascata e acionamento direto</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>A tela de relacionamentos foi a que mais mudou a rotina, porque atacou uma busca que ninguém contabilizava: achar a pessoa certa para resolver uma exceção.</p>
+          <div class="kv">
+            <div><dt>Filtro dependente</dt><dd>A lista de campanhas é derivada do agrupamento já escolhido. A segunda escolha nunca oferece uma opção que não existe para a primeira.</dd></div>
+            <div><dt>Três pontas de contato</dt><dd>Relacionamento interno, cliente contratante e plataforma do fornecedor, cada um no seu bloco, com a data da última atualização do registro.</dd></div>
+            <div><dt>Conversa em um clique</dt><dd>O app monta o endereço da conversa no Teams a partir do contato selecionado e abre direto no chat certo.</dd></div>
+            <div><dt>E-mail pré-montado</dt><dd>Um clique gera a mensagem já com os destinatários das duas pontas e o assunto preenchido, para que o escalonamento saia padronizado.</dd></div>
+            <div><dt>Por que isso importa</dt><dd>Copiar endereço de uma planilha para o cliente de e-mail é onde o erro acontece: contato desatualizado, destinatário esquecido, pessoa errada acionada. Tirar o passo manual foi tirar a chance do erro.</dd></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">D</span>Governança e segurança</span><span class="s-hint">Por que um app de acessos não deveria escrever</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <p>Matriz de acesso é artefato de auditoria. Cada escolha de construção considerou o que um auditor perguntaria: quem tem acesso a quê, com base em qual regra, quem alterou a regra e quando.</p>
+          <div class="kv">
+            <div><dt>Escrita na origem</dt><dd>Sem gravação pelo aplicativo. A alteração acontece na base, por formulário, com autor e data registrados pela própria plataforma.</dd></div>
+            <div><dt>Edição concentrada</dt><dd>Duas pessoas responsáveis mantêm as matrizes. Quanto mais mãos editam uma matriz de acesso, menor a consistência e mais difícil explicar uma divergência depois.</dd></div>
+            <div><dt>Menor privilégio fora do gestor de identidades</dt><dd>Nos sistemas centrais, a matriz é aplicada automaticamente. Nos periféricos, a concessão é manual — e o app virou a fonte única para que ela siga o papel definido, não a experiência de quem está atendendo.</dd></div>
+            <div><dt>Acesso restrito ao time</dt><dd>A matriz descreve quem pode o quê em cada sistema — conteúdo sensível por natureza. Por isso a aplicação é fechada ao time de gestão de acessos, e não um portal aberto à empresa.</dd></div>
+            <div><dt>O app não concede nada</dt><dd>Ele lê perfis, sistemas e procedimentos. Não armazena credencial, não concede acesso e não executa nenhuma ação em sistema de produção.</dd></div>
+            <div><dt>Autenticação herdada</dt><dd>Acesso ao app e às listas pela identidade corporativa, sem cadastro paralelo de usuário e sem senha própria para manter.</dd></div>
+          </div>
+        </div>
+      </details>
+
+      <details>
+        <summary>
+          <span><span class="s-title"><span class="s-letter">E</span>Aprendizados</span><span class="s-hint">O que ficou de lição</span></span>
+          <span class="plus" aria-hidden="true">+</span>
+        </summary>
+        <div class="d-body">
+          <div class="lessons">
+            <div class="lesson"><span class="n">1</span><p><strong>Modelar o dado foi mais importante que desenhar a tela.</strong> O ganho real não veio do aplicativo, veio de transformar colunas de planilha em campos com tipo, domínio e significado. A tela só expôs o que o modelo passou a sustentar.</p></div>
+            <div class="lesson"><span class="n">2</span><p><strong>O padrão repetido é uma feature.</strong> Oito telas iguais parecem repetição até a nona unidade precisar existir — aí viram molde. E o time aprende uma vez, não oito.</p></div>
+            <div class="lesson"><span class="n">3</span><p><strong>Recusar escopo também é desenho.</strong> Não construir a edição foi a decisão mais defensável do projeto, e a que mais exigiu explicação na época.</p></div>
+            <div class="lesson"><span class="n">4</span><p><strong>A busca invisível é a que mais custa.</strong> Ninguém media o tempo gasto achando o contato de escalonamento, porque esse tempo estava diluído. Era onde havia mais a ganhar.</p></div>
+          </div>
+        </div>
+      </details>
+
+      <div class="related narrow">
+        <div class="r-tag">Case relacionado</div>
+        <h3>Este app é uma peça de um ecossistema maior</h3>
+        <p>A matriz de acessos nasceu dentro de um projeto mais amplo: a intranet, a base de conhecimento, o controle de liberação de turmas e as automações de escala que tiraram a área de acessos do modo reativo — 80% menos erros e 13% mais eficiência.</p>
+        <a href="control-desk.html">Ler o case do ecossistema Control Desk →</a>
+      </div>
+
+      <div class="confid narrow">
+        <strong>Sobre confidencialidade:</strong> este case foi anonimizado. Nomes de empresas, marcas, unidades, sistemas, pessoas e telas originais foram omitidos; a descrição acima representa a arquitetura e as decisões da solução, não seus dados.
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="container">
+      <h2>Tem uma matriz crítica vivendo em planilha?</h2>
+      <p>Gosto de transformar controles frágeis em aplicações que o time confia e a auditoria aceita.</p>
+      <a href="mailto:ingridpcarneiro@outlook.com" class="btn">E-mail</a>
+      <a href="https://www.linkedin.com/" class="btn" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="index.html" class="btn">Voltar ao portfólio</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">© <span id="year"></span> Ingrid Carneiro — Inteligência de dados para negócios.</div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

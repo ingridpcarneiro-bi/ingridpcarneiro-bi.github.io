@@ -124,6 +124,11 @@
     .lesson p { margin: 0 !important; }
     .lesson strong { color: var(--ink); }
 
+    .related { margin-top: 2.5rem; padding: 1.6rem 1.8rem; background: var(--bg-card); border: 1px solid var(--border); border-left: 2px solid var(--gold); border-radius: 2px; }
+    .related .r-tag { font-size: .74rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
+    .related h3 { font-size: 1.4rem; margin-bottom: .5rem; }
+    .related p { font-size: .96rem; color: var(--ink-soft); margin-bottom: .8rem; }
+    .related a { font-weight: 500; font-size: .95rem; }
     .confid { margin-top: 3rem; padding: 1.4rem 1.6rem; border: 1px dashed var(--gold); font-size: .9rem; color: var(--ink-soft); background: var(--bg); }
 
     .cta { text-align: center; padding: 5.5rem 0; background: var(--accent); color: var(--bg); }
@@ -267,31 +272,24 @@
 
         <article class="block">
           <div class="b-num">02</div>
-          <h3>App de Matrizes (Supermatriz)</h3>
+          <h3>App de Matrizes de Acesso</h3>
           <div class="who">O fim das planilhas</div>
-          <p>Aplicativo que substituiu as planilhas compartilhadas. Reúne as matrizes de cada unidade operacional, com campanhas, cargos, perfis, funções e sistemas para atribuição de acessos. Uma tela de Supermatriz consolida todas as unidades em uma só visão, e uma tela de edição concentra as alterações em um ponto controlado. O app reconhece quem está usando e dá as boas-vindas pelo nome.</p>
-          <div class="tools">Power Apps · SharePoint Lists · Office 365</div>
+          <p>Aplicativo que substituiu as planilhas compartilhadas. Reúne as matrizes de acesso de cada unidade operacional, uma visão consolidada em Power BI, o catálogo dos sistemas periféricos e os contatos de escalonamento de cada campanha, com atalhos para acionar pelo Teams ou pelo Outlook. É a peça mais densa do ecossistema, e tem case próprio.</p>
+          <p><a href="matriz-acessos.html"><strong>Ler o case completo do app de matrizes →</strong></a></p>
+          <div class="tools">Power Apps · SharePoint Lists · Office 365 · Teams · Power BI</div>
         </article>
 
         <article class="block">
           <div class="b-num">03</div>
-          <h3>Relacionamentos e escalonamento</h3>
-          <div class="who">Quem acionar, e como</div>
-          <p>Para cada campanha, o app mostra quem são os pontos de contato, tanto na central quanto no cliente contratante, com atalhos diretos para abrir uma conversa no Teams ou um e-mail no Outlook. Fica em uma tela do próprio app de matrizes, a um clique de distância — tudo junto, no mesmo lugar. Um texto padrão de escalonamento garante que todos acionem as áreas do mesmo jeito.</p>
-          <div class="tools">Power Apps · Teams · Outlook</div>
-        </article>
-
-        <article class="block">
-          <div class="b-num">04</div>
           <h3>Controle de campanhas</h3>
           <div class="who">A liberação de uma turma inteira, etapa por etapa</div>
           <p>Quando uma turma nova entra — digamos, 30 pessoas — todas precisam receber os acessos da campanha, do básico ao específico daquele tipo de atendimento, na ordem certa e com a aprovação do responsável por cada sistema. Um segundo aplicativo acompanha esse ciclo: o que já foi liberado, o que está pendente, o que deu problema, o que precisou de aprovação do owner e o que teve de ser escalonado — por exemplo, quando o aprovador estava ausente. A área de campanhas na intranet reúne ainda o fluxograma do processo, o controle individual, as perguntas frequentes e o tratamento de exceções.</p>
-          <p>Esse app foi construído em parceria — minha contribuição foi no desenho e na integração ao ecossistema. Ele fica logo abaixo do app de matrizes na intranet, porque os dois funcionam juntos: a matriz diz <em>o que</em> liberar; o controle mostra <em>em que ponto</em> cada liberação está.</p>
+          <p>Esse app foi construído em parceria — minha contribuição foi no desenho e na integração ao ecossistema. Ele fica logo abaixo do app de matrizes na intranet, porque os dois funcionam juntos: a matriz diz <strong>o que</strong> liberar; o controle mostra <strong>em que ponto</strong> cada liberação está.</p>
           <div class="tools">Power Apps · Lists · Power Automate</div>
         </article>
 
         <article class="block">
-          <div class="b-num">05</div>
+          <div class="b-num">04</div>
           <h3>Gestão do time</h3>
           <div class="who">Escalas que não pegam ninguém de surpresa</div>
           <p>Calendário de plantonistas, escala de férias, escala presencial e remota, feriados nacionais e regionais e aniversariantes, todos em listas com visão de calendário. Lembretes automáticos, disparados alguns dias antes, avisam a gestão de quem estará ausente, de uma unidade que não vai operar por feriado regional ou de um feriado nacional — e as escalas passaram a ser fechadas com um mês de antecedência. Sem aplicativo: só listas bem estruturadas e uma automação simples.</p>
@@ -299,7 +297,7 @@
         </article>
 
         <article class="block">
-          <div class="b-num">06</div>
+          <div class="b-num">05</div>
           <h3>Base de conhecimento</h3>
           <div class="who">Do conhecimento implícito ao material formal</div>
           <p>Treinamentos em vídeo mostrando como solicitar cada acesso, procedimentos em PDF, um catálogo dos sistemas periféricos com o fluxo de concessão de cada um, e uma lista de erros conhecidos com a solução de cada um. Projetos de implantação de novos acessos são acompanhados no Planner.</p>
@@ -307,7 +305,7 @@
         </article>
 
         <article class="block">
-          <div class="b-num">07</div>
+          <div class="b-num">06</div>
           <h3>Governança e visão consolidada</h3>
           <div class="who">Auditoria pronta para qualquer pessoa responder</div>
           <p>Repositório do time para respostas de auditoria e atendimentos específicos, atas das reuniões semanais e um painel em Power BI com a visão administrativa consolidada de todas as matrizes, acessível de dentro do próprio app.</p>
@@ -372,7 +370,7 @@
         </div>
         <div class="decision">
           <h4>Uma lista por unidade, uma visão para todas</h4>
-          <p>Cada unidade operacional mantém sua própria matriz, o que facilita a manutenção e reduz conflitos de edição. A Supermatriz junta tudo em uma tela de leitura para quem precisa ver o todo.</p>
+          <p>Cada unidade operacional mantém sua própria matriz, o que facilita a manutenção e reduz conflitos de edição. A visão consolidada junta tudo em uma camada de leitura para quem precisa ver o todo.</p>
         </div>
         <div class="decision">
           <h4>Automatizar o que costuma ser esquecido</h4>
@@ -405,7 +403,7 @@
           <div class="kv">
             <div><dt>Camada de dados</dt><dd>Listas do SharePoint: matrizes por unidade, relacionamentos de campanha, sistemas e acessos, escalas, plantões, feriados, projetos.</dd></div>
             <div><dt>Camada de documentos</dt><dd>Bibliotecas para procedimentos, auditorias, atas e materiais de treinamento.</dd></div>
-            <div><dt>Camada de aplicação</dt><dd>Dois apps em Power Apps: o de matrizes (construção própria) e o de controle de campanhas (construído em parceria).</dd></div>
+            <div><dt>Camada de aplicação</dt><dd>Dois apps em Power Apps: o de <a href="matriz-acessos.html">matrizes de acesso</a> (construção própria, com case próprio) e o de controle de campanhas (construído em parceria).</dd></div>
             <div><dt>Camada de automação</dt><dd>Lembretes automáticos que avisam a gestão sobre escalas, ausências e feriados, e o apoio ao tratamento de exceções na liberação das campanhas.</dd></div>
             <div><dt>Camada de análise</dt><dd>Painel em Power BI com a visão administrativa consolidada, acessível de dentro do app.</dd></div>
             <div><dt>Camada de colaboração</dt><dd>Teams e Outlook para escalonamento, Planner para projetos, Clipchamp para vídeos.</dd></div>
@@ -413,39 +411,10 @@
         </div>
       </details>
 
-      <details>
-        <summary>
-          <span><span class="s-title"><span class="s-letter">B</span>A Supermatriz por dentro</span><span class="s-hint">Telas, fontes de dados e lógica de acesso</span></span>
-          <span class="plus" aria-hidden="true">+</span>
-        </summary>
-        <div class="d-body">
-          <h4>A lógica de uma matriz de acessos</h4>
-          <div class="chain"><span>Campanha</span><i>→</i><span>Cargo</span><i>→</i><span>Role</span><i>→</i><span>Permissões por sistema</span></div>
-          <p>É o modelo RBAC na prática: o acesso não é concedido à pessoa, e sim ao papel que ela ocupa. Para qualquer combinação de campanha e cargo, o app responde quais roles e permissões aquela pessoa precisa receber — tanto nos sistemas centrais, aplicados pelo IDM, quanto nos sistemas periféricos, concedidos manualmente. É a mesma pergunta que antes exigia abrir a planilha certa, encontrar a aba certa e torcer para ninguém ter alterado a linha errada.</p>
-
-          <h4>A ordem importa</h4>
-          <div class="chain"><span>Criação da identidade</span><i>→</i><span>Diretório corporativo</span><i>→</i><span>Acessos básicos</span><i>→</i><span>Acessos específicos da campanha</span></div>
-          <p>Muitos acessos têm pré-requisito: não se libera um sistema sem que a identidade exista e o acesso ao diretório corporativo esteja ativo, por exemplo. O app de matrizes já organiza os acessos de cada campanha nessa sequência de dependências, para que a liberação de uma turma siga sempre o mesmo caminho. E nenhum acesso é automático: todos passam pela aprovação do responsável pelo sistema.</p>
-
-          <h4>Telas</h4>
-          <div class="kv">
-            <div><dt>Página inicial</dt><dd>Boas-vindas personalizada com nome e foto do usuário, e navegação para cada unidade.</dd></div>
-            <div><dt>Matrizes por unidade</dt><dd>Uma tela para cada unidade operacional, com busca e filtros.</dd></div>
-            <div><dt>Supermatriz</dt><dd>Visão consolidada de todas as unidades em um só lugar.</dd></div>
-            <div><dt>Edição das matrizes</dt><dd>Ponto único e controlado para alterações.</dd></div>
-            <div><dt>Relacionamentos</dt><dd>Dados de campanha cruzados com os contatos de escalonamento, com atalhos para Teams e Outlook.</dd></div>
-          </div>
-
-          <h4>Fontes conectadas</h4>
-          <div class="chips">
-            <span>Listas por unidade operacional</span><span>Dados de campanhas e relacionamentos</span><span>Usuários do Office 365</span><span>Teams</span><span>Power BI</span>
-          </div>
-        </div>
-      </details>
 
       <details>
         <summary>
-          <span><span class="s-title"><span class="s-letter">C</span>Automação da gestão do time</span><span class="s-hint">Escalas, ausências e lembretes</span></span>
+          <span><span class="s-title"><span class="s-letter">B</span>Automação da gestão do time</span><span class="s-hint">Escalas, ausências e lembretes</span></span>
           <span class="plus" aria-hidden="true">+</span>
         </summary>
         <div class="d-body">
@@ -462,7 +431,7 @@
 
       <details>
         <summary>
-          <span><span class="s-title"><span class="s-letter">D</span>Gestão do conhecimento</span><span class="s-hint">Como transformar experiência em material</span></span>
+          <span><span class="s-title"><span class="s-letter">C</span>Gestão do conhecimento</span><span class="s-hint">Como transformar experiência em material</span></span>
           <span class="plus" aria-hidden="true">+</span>
         </summary>
         <div class="d-body">
@@ -477,14 +446,14 @@
 
       <details>
         <summary>
-          <span><span class="s-title"><span class="s-letter">E</span>Governança e segurança</span><span class="s-hint">Acesso é risco, e risco precisa de trilha</span></span>
+          <span><span class="s-title"><span class="s-letter">D</span>Governança e segurança</span><span class="s-hint">Acesso é risco, e risco precisa de trilha</span></span>
           <span class="plus" aria-hidden="true">+</span>
         </summary>
         <div class="d-body">
           <p>Gestão de identidades e acessos é uma área auditada. Cada decisão de construção considerou o que um auditor perguntaria: quem tem acesso a quê, com base em qual regra, e onde está a evidência.</p>
           <div class="kv">
             <div><dt>Verificação prévia</dt><dd>Checagem de restrições antes de qualquer concessão, evitando liberar acesso a quem não deveria recebê-lo.</dd></div>
-            <div><dt>Menor privilégio fora do IDM</dt><dd>Nos sistemas centrais, o IDM aplica a matriz. Nos periféricos, a Supermatriz virou a fonte única: cada concessão manual passou a seguir o papel definido para a função, e não apenas a experiência de quem estava atendendo.</dd></div>
+            <div><dt>Menor privilégio fora do IDM</dt><dd>Nos sistemas centrais, o IDM aplica a matriz. Nos periféricos, o app de matrizes virou a fonte única: cada concessão manual passou a seguir o papel definido para a função, e não apenas a experiência de quem estava atendendo.</dd></div>
             <div><dt>Edição controlada</dt><dd>Alterações nas matrizes concentradas em uma tela própria, não espalhadas por cópias de planilha.</dd></div>
             <div><dt>Trilha de evidências</dt><dd>Respostas e evidências de auditoria guardadas em biblioteca do time, com acesso imediato para quem estiver de plantão.</dd></div>
             <div><dt>Revisão de fluxos</dt><dd>Com o processo visível, lacunas passaram a ser levadas ao cliente contratante e os fluxos foram redesenhados.</dd></div>
@@ -495,7 +464,7 @@
 
       <details>
         <summary>
-          <span><span class="s-title"><span class="s-letter">F</span>Aprendizados</span><span class="s-hint">O que ficou de lição</span></span>
+          <span><span class="s-title"><span class="s-letter">E</span>Aprendizados</span><span class="s-hint">O que ficou de lição</span></span>
           <span class="plus" aria-hidden="true">+</span>
         </summary>
         <div class="d-body">
@@ -507,6 +476,13 @@
           </div>
         </div>
       </details>
+
+      <div class="related narrow">
+        <div class="r-tag">Case relacionado</div>
+        <h3>O app de matrizes tem um case próprio</h3>
+        <p>A peça mais densa deste ecossistema — 13 telas, 10 fontes de dados, filtro em cascata e a decisão de não gravar nada para manter a trilha de auditoria na origem — está detalhada em um case separado.</p>
+        <a href="matriz-acessos.html">Ler o case da Matriz de Acessos &rarr;</a>
+      </div>
 
       <div class="confid narrow">
         <strong>Sobre confidencialidade:</strong> este case foi anonimizado. Nomes de empresas, marcas, unidades, pessoas e telas originais foram omitidos; a descrição acima representa a estrutura da solução, não seus dados.
